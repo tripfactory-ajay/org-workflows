@@ -466,10 +466,122 @@
 
         /* Print Styles */
         @media print {
-            .sidebar, .no-print { display: none !important; }
-            .main-content { width: 100%; }
-            .dept-panel { display: block !important; page-break-before: always; }
-            .content-body { overflow: visible; }
+            /* A4 page setup */
+            @page {
+                size: A4 portrait;
+                margin: 15mm 12mm 15mm 12mm;
+            }
+
+            /* Reset layout for print */
+            * { box-sizing: border-box; }
+            body { background: white !important; font-size: 10pt !important; }
+
+            /* Hide navigation sidebar and controls */
+            .sidebar, .no-print, #staffModal, .staff-search,
+            .staff-filter, #staffSearch, #staffSubFilter,
+            #staffLocationFilter, .modal-overlay { display: none !important; }
+
+            /* Full width content */
+            .main-content, .content-body, .content-area {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+
+            /* Show ALL department panels in print - one per page */
+            .dept-panel {
+                display: block !important;
+                width: 100% !important;
+                page-break-before: always;
+                page-break-inside: avoid;
+                break-before: page;
+                margin: 0 !important;
+                padding: 8px 0 !important;
+                box-shadow: none !important;
+            }
+
+            /* First panel: no forced page break before it */
+            .dept-panel:first-of-type {
+                page-break-before: avoid;
+                break-before: avoid;
+            }
+
+            /* Panel header on print */
+            .panel-header {
+                background: #1e293b !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 10px 14px !important;
+                margin-bottom: 8px !important;
+                border-radius: 6px !important;
+            }
+
+            .panel-title { font-size: 14pt !important; font-weight: 700 !important; color: white !important; }
+            .panel-subtitle { font-size: 9pt !important; color: #cbd5e1 !important; }
+
+            /* Stats bar */
+            .panel-stats {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                margin-top: 6px !important;
+            }
+            .stat-item { min-width: 80px !important; }
+            .stat-value { font-size: 11pt !important; }
+            .stat-label { font-size: 7pt !important; }
+
+            /* Content cards */
+            .content-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 8px !important;
+                padding: 10px !important;
+                border: 1px solid #e2e8f0 !important;
+                border-radius: 6px !important;
+                box-shadow: none !important;
+            }
+
+            /* Staff directory table - show full list */
+            #staffTableContainer, .staff-table-section {
+                display: block !important;
+                width: 100% !important;
+            }
+            
+            table { width: 100% !important; border-collapse: collapse !important; font-size: 8pt !important; }
+            th { background: #1e293b !important; color: white !important; padding: 4px 6px !important;
+                 -webkit-print-color-adjust: exact; print-color-adjust: exact; text-align: left !important; font-size: 8pt !important; }
+            td { padding: 3px 6px !important; border-bottom: 1px solid #f1f5f9 !important; font-size: 8pt !important; }
+            tr:nth-child(even) td { background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+            /* Grid layouts - stack for print */
+            .grid { display: block !important; }
+            .grid > * { margin-bottom: 6px !important; width: 100% !important; }
+
+            /* Colours preserved */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            /* Page number in footer */
+            .dept-panel::after {
+                content: "";
+                display: block;
+                page-break-after: always;
+            }
+
+            /* Typography scale down */
+            h1, h2, h3 { font-size: 12pt !important; }
+            p, li, div { font-size: 9pt !important; line-height: 1.4 !important; }
+            .card-title { font-size: 10pt !important; font-weight: 700 !important; }
+
+            /* Overflow visible for all containers */
+            .overflow-auto, .overflow-y-auto, .overflow-x-auto {
+                overflow: visible !important;
+                max-height: none !important;
+                height: auto !important;
+            }
         }
 
         /* Scrollbar Styling */
@@ -848,7 +960,7 @@
                         </div>
                         <div class="nav-text">
                             <div class="nav-label">Post-Booking Ops</div>
-                            <div class="nav-count">99 employees • 24h SLA</div>
+                            <div class="nav-count">101 employees • 24h SLA</div>
                         </div>
                         <span class="nav-badge">99</span>
                     </div>
@@ -859,7 +971,7 @@
                         </div>
                         <div class="nav-text">
                             <div class="nav-label">Global Delivery</div>
-                            <div class="nav-count">11 employees • 24/7 Support</div>
+                            <div class="nav-count">39 employees • 24/7 Support</div>
                         </div>
                         <span class="nav-badge">11</span>
                     </div>
@@ -870,7 +982,7 @@
                         </div>
                         <div class="nav-text">
                             <div class="nav-label">Escalation</div>
-                            <div class="nav-count">36 employees • RCA focus</div>
+                            <div class="nav-count">5 employees • RCA focus</div>
                         </div>
                         <span class="nav-badge">36</span>
                     </div>
@@ -2210,7 +2322,7 @@
 
                     <div class="panel-header">
                         <div class="panel-title text-emerald-700">Post-Booking Operations</div>
-                        <div class="panel-subtitle">Service Execution Hub • 99 Employees • 24h Confirmation SLA</div>
+                        <div class="panel-subtitle">Service Execution Hub • 101 Employees • 24h Confirmation SLA</div>
 
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">101</div><div class="stat-label">Destination Ops</div></div>
@@ -2433,10 +2545,10 @@
 
                     <div class="panel-header">
                         <div class="panel-title text-pink-700">Global Delivery</div>
-                        <div class="panel-subtitle">On-Travel Support • 11 Employees • 2-Minute Response SLA</div>
+                        <div class="panel-subtitle">On-Travel Support & Escalation • 39 Employees • 24/7 Support</div>
 
                         <div class="panel-stats">
-                            <div class="stat-item"><div class="stat-value">36</div><div class="stat-label">Total Staff</div></div>
+                            <div class="stat-item"><div class="stat-value">39</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Chat Support</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Team Leaders</div></div>
                             <div class="stat-item"><div class="stat-value">30</div><div class="stat-label">Support Executives</div></div>
@@ -2650,7 +2762,7 @@
 
                     <div class="panel-header">
                         <div class="panel-title text-red-700">Customer Care & Escalation</div>
-                        <div class="panel-subtitle">Complex Issue Resolution • 36 Employees • 15-Minute Acknowledgement</div>
+                        <div class="panel-subtitle">Complex Issue Resolution • 5 Employees • 15-Minute Acknowledgement</div>
 
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Escalation Execs</div></div>
@@ -3110,7 +3222,7 @@
                 <div id="finance-panel" class="dept-panel">
                     <div class="panel-header">
                         <div class="panel-title text-teal-700">Finance Department</div>
-                        <div class="panel-subtitle">Financial Governance Backbone • 38 Employees • 5 Control Engines</div>
+                        <div class="panel-subtitle">Financial Governance Backbone • 39 Employees • 5 Control Engines</div>
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">39</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">15</div><div class="stat-label">FinOps</div></div>
@@ -3360,9 +3472,9 @@
                 <div id="hr-panel" class="dept-panel">
                     <div class="panel-header">
                         <div class="panel-title text-purple-700">Human Resources Department</div>
-                        <div class="panel-subtitle">Full Employee Lifecycle Management • 14 Employees</div>
+                        <div class="panel-subtitle">Full Employee Lifecycle Management • 13 Employees</div>
                         <div class="panel-stats">
-                            <div class="stat-item"><div class="stat-value">14</div><div class="stat-label">Total Staff</div></div>
+                            <div class="stat-item"><div class="stat-value">13</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">HR Operations</div></div>
                             <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Recruitment &amp; TA</div></div>
                             <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Payroll</div></div>
