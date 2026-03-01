@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TripFactory Organisational Structure & Workflow</title>
+    <title>Trip Factory — Organisation Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -119,7 +119,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: #f8fafc;
+            background: #f1f5f9;
             overflow: visible;
         }
 
@@ -297,7 +297,7 @@
         }
 
         .person-item {
-            background: #f8fafc;
+            background: #f1f5f9;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 16px;
@@ -342,7 +342,7 @@
         }
 
         .workflow-table th {
-            background: #f8fafc;
+            background: #f1f5f9;
             padding: 12px;
             text-align: left;
             font-weight: 600;
@@ -356,7 +356,7 @@
         }
 
         .workflow-table tr:hover {
-            background: #f8fafc;
+            background: #f1f5f9;
         }
 
         .stage-num {
@@ -555,7 +555,7 @@
             th { background: #1e293b !important; color: white !important; padding: 4px 6px !important;
                  -webkit-print-color-adjust: exact; print-color-adjust: exact; text-align: left !important; font-size: 8pt !important; }
             td { padding: 3px 6px !important; border-bottom: 1px solid #f1f5f9 !important; font-size: 8pt !important; }
-            tr:nth-child(even) td { background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            tr:nth-child(even) td { background: #f1f5f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
             /* Grid layouts - stack for print */
             .grid { display: block !important; }
@@ -763,7 +763,7 @@
         }
         .staff-modal-controls {
             padding: 12px 24px;
-            background: #f8fafc;
+            background: #f1f5f9;
             border-bottom: 1px solid #e2e8f0;
             display: flex;
             gap: 12px;
@@ -820,7 +820,7 @@
             transition: background 0.15s;
         }
         .staff-table tbody tr:hover {
-            background: #f8fafc;
+            background: #f1f5f9;
         }
         .staff-table tbody td {
             padding: 10px 12px;
@@ -873,6 +873,242 @@
             color: #94a3b8;
             font-size: 0.95rem;
         }
+
+        /* ── CORPORATE REFINEMENTS ── */
+        
+        /* Remove all emoji/icon animations */
+        * { animation: none !important; }
+        
+        /* Clean corporate body */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        
+        /* Sidebar - clean dark navy */
+        .sidebar {
+            background: #0f172a !important;
+            border-right: 1px solid #1e293b !important;
+        }
+        
+        .sidebar-header {
+            background: #0f172a !important;
+            border-bottom: 1px solid #1e293b !important;
+        }
+        
+        /* Nav items - clean, no gimmicks */
+        .nav-item {
+            padding: 10px 16px !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            border-left: 3px solid transparent !important;
+            transition: background 0.15s, border-color 0.15s !important;
+            cursor: pointer;
+        }
+        .nav-item:hover {
+            background: #1e293b !important;
+            border-left-color: #3b82f6 !important;
+        }
+        .nav-item.active {
+            background: #1e3a5f !important;
+            border-left-color: #3b82f6 !important;
+        }
+        
+        .nav-label {
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.01em !important;
+        }
+        .nav-count {
+            font-size: 0.68rem !important;
+            color: #64748b !important;
+            margin-top: 1px !important;
+        }
+        
+        .nav-section-title {
+            font-size: 0.65rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            color: #475569 !important;
+            padding: 12px 16px 6px !important;
+        }
+        
+        /* Panel header - corporate clean */
+        .panel-header {
+            padding: 28px 32px 24px !important;
+            border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+        }
+        
+        .panel-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.01em !important;
+        }
+        
+        .panel-subtitle {
+            font-size: 0.8rem !important;
+            margin-top: 4px !important;
+            font-weight: 400 !important;
+            opacity: 0.85 !important;
+        }
+        
+        .panel-stats {
+            display: flex !important;
+            gap: 0 !important;
+            margin-top: 20px !important;
+            border-top: 1px solid rgba(255,255,255,0.12) !important;
+            padding-top: 16px !important;
+        }
+        
+        .stat-item {
+            flex: 1 !important;
+            text-align: center !important;
+            padding: 0 12px !important;
+            border-right: 1px solid rgba(255,255,255,0.1) !important;
+        }
+        .stat-item:last-child { border-right: none !important; }
+        
+        .stat-value {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.02em !important;
+            line-height: 1 !important;
+        }
+        
+        .stat-label {
+            font-size: 0.65rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.06em !important;
+            margin-top: 4px !important;
+            opacity: 0.7 !important;
+        }
+        
+        /* Content area */
+        .main-content { background: #f1f5f9 !important; }
+        
+        .dept-panel {
+            padding: 28px 32px !important;
+        }
+        
+        /* Cards - clean corporate */
+        .content-card {
+            background: white !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+            margin-bottom: 16px !important;
+        }
+        
+        .card-title {
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.06em !important;
+            margin-bottom: 10px !important;
+        }
+        
+        /* View staff button */
+        .view-staff-btn {
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            padding: 9px 18px !important;
+            border-radius: 6px !important;
+            letter-spacing: 0.02em !important;
+            cursor: pointer !important;
+        }
+        
+        /* Staff modal */
+        .staff-modal {
+            border-radius: 8px !important;
+            max-width: 960px !important;
+        }
+        
+        .staff-modal-header {
+            padding: 20px 24px !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        
+        .staff-modal-title {
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+        }
+        
+        .staff-search, .staff-filter {
+            border-radius: 6px !important;
+            font-size: 0.8rem !important;
+        }
+        
+        /* Table */
+        .staff-table th {
+            font-size: 0.68rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.06em !important;
+            font-weight: 700 !important;
+            background: #0f172a !important;
+            color: #94a3b8 !important;
+        }
+        
+        .staff-table td {
+            font-size: 0.8rem !important;
+            padding: 10px 12px !important;
+        }
+        
+        /* Org chart nodes */
+        .org-node {
+            border-radius: 6px !important;
+            font-size: 0.75rem !important;
+        }
+
+        /* Suggestion boxes - distinct from confirmed data */
+        .suggestion-box {
+            background: #fefce8 !important;
+            border: 1px solid #fbbf24 !important;
+            border-left: 4px solid #f59e0b !important;
+            border-radius: 6px !important;
+            padding: 14px 16px !important;
+            margin-bottom: 12px !important;
+        }
+        .suggestion-label {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-bottom: 6px;
+        }
+        .confirmed-box {
+            background: white !important;
+            border: 1px solid #e2e8f0 !important;
+            border-left: 4px solid #10b981 !important;
+            border-radius: 6px !important;
+            padding: 14px 16px !important;
+            margin-bottom: 12px !important;
+        }
+        .confirmed-label {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-bottom: 6px;
+        }
+
+        /* Print clean */
+        @media print {
+            .sidebar, .nav-item, button { display: none !important; }
+            .main-content { width: 100% !important; }
+            .dept-panel { page-break-before: always; }
+        }
 </style>
 <base target="_blank">
 </head>
@@ -880,12 +1116,34 @@
     <div class="app-container">
         <!-- Left Sidebar -->
         <aside class="sidebar no-print">
-            <div class="sidebar-header">
-                <h1 class="text-xl font-bold flex items-center gap-3">
-                    <i class="fas fa-sitemap text-blue-400"></i>
-                    TripFactory Org
-                </h1>
-                <p class="text-xs text-slate-400 mt-1">698 Employees • 8 Departments</p>
+            <div class="sidebar-header" style="padding:16px 20px;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <img src="trip-factory-logo.png" alt="Trip Factory" 
+                        style="height:36px;width:auto;object-fit:contain;flex-shrink:0;"
+                        onerror="this.style.display='none'">
+                    <div>
+                        <div style="font-size:0.8rem;font-weight:700;color:white;letter-spacing:0.05em;text-transform:uppercase;">Organisation Directory</div>
+                        <div style="font-size:0.7rem;color:#94a3b8;margin-top:1px;">Internal Use Only • Confidential</div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #334155;padding-top:10px;display:flex;gap:16px;">
+                    <div style="text-align:center;">
+                        <div style="font-size:1.1rem;font-weight:700;color:#60a5fa;">698</div>
+                        <div style="font-size:0.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em;">Employees</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:1.1rem;font-weight:700;color:#60a5fa;">8</div>
+                        <div style="font-size:0.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em;">Departments</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:1.1rem;font-weight:700;color:#60a5fa;">6</div>
+                        <div style="font-size:0.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em;">Locations</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:1.1rem;font-weight:700;color:#60a5fa;">FY25</div>
+                        <div style="font-size:0.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.04em;">Data Period</div>
+                    </div>
+                </div>
             </div>
 
             <div class="sidebar-content">
@@ -960,7 +1218,7 @@
                         </div>
                         <div class="nav-text">
                             <div class="nav-label">Post-Booking Ops</div>
-                            <div class="nav-count">101 employees • 24h SLA</div>
+                            <div class="nav-count">99 employees • 24h SLA</div>
                         </div>
                         <span class="nav-badge">99</span>
                     </div>
@@ -1053,6 +1311,13 @@
                         </div>
                     </div>
 
+                    <div class="nav-item" onclick="showPanel('europe')" >
+                        <div class="nav-icon" style="background:#1e40af;"><i class="fas fa-globe-europe"></i></div>
+                        <div>
+                            <div class="nav-label" style="color:#1e40af;">European Resources</div>
+                            <div class="nav-count">103 staff • All Europe Functions</div>
+                        </div>
+                    </div>
                     <div class="nav-item" onclick="showPanel('marketing')">
                         <div class="nav-icon bg-rose-500">
                             <i class="fas fa-bullhorn text-white text-xs"></i>
@@ -1108,6 +1373,8 @@
                                 <i class="fas fa-building text-amber-500"></i>
                                 <span>Management</span>
                             </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Founder of Trip Factory, driving overall company vision, strategy, and growth direction across all business units.</div>
+                            <a href="mailto:vinay@tripfactory.com" style="font-size:0.75rem;color:#3b82f6;margin-top:6px;display:block;">vinay@tripfactory.com</a>
                         </div>
 
                         <div class="exec-card c-suite">
@@ -1122,20 +1389,8 @@
                                 <i class="fas fa-cog text-blue-500"></i>
                                 <span>Operations Leadership</span>
                             </div>
-                        </div>
-
-                        <div class="exec-card c-suite">
-                            <div class="exec-header">
-                                <div>
-                                    <div class="exec-name">Ajay Kawa</div>
-                                    <div class="exec-role">BTO (Business Transition Officer)</div>
-                                </div>
-                                <span class="exec-badge">C-Suite</span>
-                            </div>
-                            <div class="exec-dept">
-                                <i class="fas fa-laptop-code text-indigo-500"></i>
-                                <span>Operations Leadership</span>
-                            </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Oversees day-to-day operations across all departments, ensuring process efficiency, delivery standards, and cross-functional alignment.</div>
+                            <a href="mailto:raj@tripfactory.com" style="font-size:0.75rem;color:#3b82f6;margin-top:6px;display:block;">raj@tripfactory.com</a>
                         </div>
 
                         <div class="exec-card founder">
@@ -1150,6 +1405,8 @@
                                 <i class="fas fa-building text-amber-500"></i>
                                 <span>Management</span>
                             </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Co-Founder focused on business development, strategic partnerships, and expanding Trip Factory's market presence.</div>
+                            <a href="mailto:amit@tripfactory.com" style="font-size:0.75rem;color:#3b82f6;margin-top:6px;display:block;">amit@tripfactory.com</a>
                         </div>
 
                         <div class="exec-card founder">
@@ -1164,6 +1421,8 @@
                                 <i class="fas fa-building text-amber-500"></i>
                                 <span>Management</span>
                             </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Co-Founder responsible for product innovation and B2B channel strategy, driving platform evolution and agent partnerships.</div>
+                            <a href="mailto:ankit@tripfactory.com" style="font-size:0.75rem;color:#3b82f6;margin-top:6px;display:block;">ankit@tripfactory.com</a>
                         </div>
 
                         <div class="exec-card founder">
@@ -1178,13 +1437,15 @@
                                 <i class="fas fa-building text-amber-500"></i>
                                 <span>Management</span>
                             </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Co-Founder overseeing B2C growth, brand strategy, and direct customer engagement across Trip Factory's retail channels.</div>
+                            <a href="mailto:ankush@tripfactory.com" style="font-size:0.75rem;color:#3b82f6;margin-top:6px;display:block;">ankush@tripfactory.com</a>
                         </div>
 
                         <div class="exec-card founder">
                             <div class="exec-header">
                                 <div>
                                     <div class="exec-name">Varun Gupta</div>
-                                    <div class="exec-role">Co-Founder</div>
+                                    <div class="exec-role">Co-Founder & CTO</div>
                                 </div>
                                 <span class="exec-badge">FOUNDER</span>
                             </div>
@@ -1192,35 +1453,28 @@
                                 <i class="fas fa-building text-amber-500"></i>
                                 <span>Management</span>
                             </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Co-Founder and Chief Technology Officer, leading all technology strategy, platform development, and digital infrastructure.</div>
                         </div>
-                    </div>
 
-                    <div class="content-card">
-                        <div class="card-title">
-                            <i class="fas fa-chart-pie text-slate-600"></i>
-                            Organisational Overview
-                        </div>
-                        <div class="grid grid-cols-4 gap-6 text-center">
-                            <div>
-                                <div class="text-3xl font-bold text-slate-800">698</div>
-                                <div class="text-sm text-slate-500 mt-1">Total Employees</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold text-blue-600">291</div>
-                                <div class="text-sm text-slate-500 mt-1">Sales (B2C + B2B)</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold text-emerald-600">220</div>
-                                <div class="text-sm text-slate-500 mt-1">Operations</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold text-slate-600">192</div>
-                                <div class="text-sm text-slate-500 mt-1">Support Functions</div>
-                            </div>
-                        </div>
-                    </div>
+                        
 
-                    <!-- Board Level Summary -->
+                        <div class="exec-card c-suite">
+                            <div class="exec-header">
+                                <div>
+                                    <div class="exec-name">Ajay Kawa</div>
+                                    <div class="exec-role">BTO (Business Transition Officer)</div>
+                                </div>
+                                <span class="exec-badge">C-SUITE</span>
+                            </div>
+                            <div class="exec-dept">
+                                <i class="fas fa-laptop-code text-indigo-500"></i>
+                                <span>Business Transformation</span>
+                            </div>
+                            <div style="font-size:0.78rem;color:#64748b;line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;">Business Transition Officer, leading the CapeEye transformation programme — systems, workflow design, and operational modernisation across all departments.</div>
+                            <a href="mailto:ajay@tripfactory.com" style="font-size:0.75rem;color:#3b82f6;margin-top:6px;display:block;">ajay@tripfactory.com</a>
+                        </div>
+
+                        <!-- Board Level Summary -->
                     <div class="board-summary">
                         <h3><i class="fas fa-clipboard-list mr-2"></i>Final Board-Level Summary</h3>
                         <div class="board-grid">
@@ -1257,7 +1511,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+
+                    </div>
 
                 <!-- B2C SALES PANEL -->
                 <div id="b2c-panel" class="dept-panel">
@@ -1273,7 +1529,7 @@
                             <div class="stat-item"><div class="stat-value">118</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">13</div><div class="stat-label">Team Leads & Managers</div></div>
                             <div class="stat-item"><div class="stat-value">105</div><div class="stat-label">Destination Experts</div></div>
-                            <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Locations</div></div>
+                            <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Locations</div></div>
                         </div>
                     </div>
 <div style="padding: 12px 20px 16px; border-top: 1px solid #e2e8f0;">
@@ -1295,25 +1551,25 @@
                                     <div class="person-item">
                                         <div class="person-name">Bhagya Jyothi B</div>
                                         <div class="person-meta">ORN/21 • Team Leader</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="84e6ece5e3fde5eefdebf0ecedaae6c4f0f6edf4e2e5e7f0ebf6fdaae7ebe9">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">bhagyajyothi.b@tripfactory.com</div>
                                         <div class="person-team">LTV Team (11) + Sales Experts</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Pulkit Gupta</div>
                                         <div class="person-meta">ORN/35 • Team Leader</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f1f1a0304061b41081a1f1b0e2f1b1d061f090e0c1b001d16410c0002">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">pulkit.gupta@tripfactory.com</div>
                                         <div class="person-team">AMs (5) + DEs (34)</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Martina Vasan</div>
                                         <div class="person-meta">ORN/1074 • Team Leader</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7d101c0f0914131c530b3d090f140d1b1c1e09120f04531e1210">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">martina.v@tripfactory.com</div>
                                         <div class="person-team">DEs (37)</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Periyaraj Ravichandran</div>
                                         <div class="person-meta">ORN/831 • Team Leader</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="473722352e3e2635262d0733352e372126243328353e6924282a">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">periyaraj@tripfactory.com</div>
                                         <div class="person-team">DEs (19)</div>
                                     </div>
                                 </div>
@@ -1534,25 +1790,25 @@
                                     <div class="person-item">
                                         <div class="person-name">Mohd Asif</div>
                                         <div class="person-meta">ORN/08 • State Head</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81e0f2e8e7c1f5f3e8f1e7e0e2f5eef3f8afe2eeec">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">asif@tripfactory.com</div>
                                         <div class="person-team">Field Sales: 6</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Gauri Shankar Gaud</div>
                                         <div class="person-meta">ORN/12 • State Head</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddbabca8afb49da9afb4adbbbcbea9b2afa4f3beb2b0">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">gauri@tripfactory.com</div>
                                         <div class="person-team">Field Sales: 11</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Amir Shafi Shaikh</div>
                                         <div class="person-meta">ORN/374 • State Head</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddbcb0b4aff3ae9da9afb4adbbbcbea9b2afa4f3beb2b0">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">amir.s@tripfactory.com</div>
                                         <div class="person-team">Field Sales: 11</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Nagaraju B K</div>
                                         <div class="person-meta">ORN/48 • State Head</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6907080e081b08031c470b02291d1b00190f080a1d061b10470a0604">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">nagaraju.bk@tripfactory.com</div>
                                         <div class="person-team">Field Sales: 14</div>
                                     </div>
                                 </div>
@@ -1754,8 +2010,8 @@
 
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">56</div><div class="stat-label">Total Staff</div></div>
-                            <div class="stat-item"><div class="stat-value">30</div><div class="stat-label">Air Ticketing Execs</div></div>
-                            <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Team Leaders</div></div>
+                            <div class="stat-item"><div class="stat-value">48</div><div class="stat-label">Air Ticketing Execs</div></div>
+                            <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Team Leaders</div></div>
                             <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Deputy Managers</div></div>
                         </div>
                     </div>
@@ -1776,25 +2032,26 @@
                                     <div class="person-item border-amber-200">
                                         <div class="person-name">Tousif Sait</div>
                                         <div class="person-meta">ORN/72 • Deputy Manager - Flights Operations</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01756e747268672f726068754175736871676062756e73782f626e6c">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">tousif.sait@tripfactory.com</div>
                                         <div class="person-team">Overall FD Control & Airline Coordination</div>
                                     </div>
                                     <div class="person-item border-amber-200">
                                         <div class="person-name">Shaik Abdul Masroor</div>
                                         <div class="person-meta">ORN/24 • Deputy Manager - Group Desk</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3c515d4f4e53534e7c484e554c5a5d5f48534e45125f5351">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">masroor@tripfactory.com</div>
                                         <div class="person-team">Series Inventory & Group Flights</div>
                                     </div>
                                     <div class="person-item border-amber-200">
                                         <div class="person-name">Suraj C J</div>
                                         <div class="person-meta">ORN/2662 • Air Ticketing Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e5d5b5c4f44004d446e5a5c475e484f4d5a415c57004d4143">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">suraj.cj@tripfactory.com</div>
                                         <div class="person-team">Ticket Issuance</div>
                                     </div>
                                     <div class="person-item border-amber-200">
                                         <div class="person-name">Vijaya Kumar J</div>
                                         <div class="person-meta">ORN/2664 • Air Ticketing Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81f7e8ebe0f8e0afeac1f5f3e8f1e7e0e2f5eef3f8afe2eeec">[email&#160;protected]</a></div>
+                                        
+                                        <a href="mailto:vijaya.k@tripfactory.com" class="person-email">vijaya.k@tripfactory.com</a>
                                         <div class="person-team">Ticket Issuance & Audit</div>
                                     </div>
                                 </div>
@@ -1882,38 +2139,44 @@
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Mohammed Nabeel Faraz</div>
                                         <div class="person-meta">ORN/44 • Assistant Manager - Operations</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c323d3e3939301c282e352c3a3d3f28332e25723f3331">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">nabeel@tripfactory.com</div>
                                         <div class="person-team">Operations Leadership</div>
                                     </div>
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Vigneshwaran K</div>
                                         <div class="person-meta">ORN/1583 • Senior Air Ticketing Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e584749404b5d46594f5c4f4000456e5a5c475e484f4d5a415c57004d4143">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">vigneshwaran.k@tripfactory.com</div>
+                                        <div class="person-team">Handles complex air ticket bookings, amendments and fare optimisation</div>
                                     </div>
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Vaisakh P V</div>
                                         <div class="person-meta">ORN/2674 • Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4533242c36242e2d6b35330531372c35232426312a373c6b262a28">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">vaisakh.pv@tripfactory.com</div>
+                                        <div class="person-team">Processes flight bookings, amendments and cancellations for B2C and B2B clients</div>
                                     </div>
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Mohammed Sadath Khan</div>
                                         <div class="person-meta">ORN/2680 • Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88fbe9ece9fce0a6e3c8fcfae1f8eee9ebfce7faf1a6ebe7e5">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">sadath.k@tripfactory.com</div>
+                                        <div class="person-team">Processes flight bookings, amendments and cancellations for B2C and B2B clients</div>
                                     </div>
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Syed Mubarak</div>
                                         <div class="person-meta">ORN/2960 • Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c5f5549480241594e4d5e4d476c585e455c4a4d4f58435e55024f4341">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">syed.mubarak@tripfactory.com</div>
+                                        <div class="person-team">Processes flight bookings, amendments and cancellations for B2C and B2B clients</div>
                                     </div>
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Mohammed Faizad</div>
                                         <div class="person-meta">ORN/3007 • Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b5d5a52415a5f15567b4f49524b5d5a584f54494215585456">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">faizad.m@tripfactory.com</div>
+                                        <div class="person-team">Processes flight bookings, amendments and cancellations for B2C and B2B clients</div>
                                     </div>
                                     <div class="person-item border-orange-200">
                                         <div class="person-name">Dinakaran M</div>
                                         <div class="person-meta">ORN/3102 • Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aacec3c4cbc1cbd8cbc484c7eaded8c3dacccbc9dec5d8d384c9c5c7">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">dinakaran.m@tripfactory.com</div>
+                                        <div class="person-team">Processes flight bookings, amendments and cancellations for B2C and B2B clients</div>
                                     </div>
                                 </div>
 
@@ -2057,7 +2320,7 @@
 
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">18</div><div class="stat-label">Total Staff</div></div>
-                            <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Visa Executives</div></div>
+                            <div class="stat-item"><div class="stat-value">13</div><div class="stat-label">Visa Executives</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Managers</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Regions</div></div>
                         </div>
@@ -2083,17 +2346,17 @@
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Nithin D</div>
                                                 <div class="text-xs text-gray-600">ORN/553</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87e9eef3efeee9a9e3c7f3f5eef7e1e6e4f3e8f5fea9e4e8ea">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:nithin.d@tripfactory.com" style="color:inherit;">nithin.d@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Naina Kamat</div>
                                                 <div class="text-xs text-gray-600">ORN/2888 - Mumbai</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="553b343c3b347b3e1521273c25333436213a272c7b363a38">[email&#160;protected]</a></div>
+                                                
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Saloni Tokas</div>
                                                 <div class="text-xs text-gray-600">ORN/2689 - North</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1360727f7c7d7a3d675367617a63757270677c616a3d707c7e">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:saloni.t@tripfactory.com" style="color:inherit;">saloni.t@tripfactory.com</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -2104,32 +2367,32 @@
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Pravir Pathak</div>
                                                 <div class="text-xs text-gray-600">ORN/369</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="09797b687f6067497d7b60796f686a7d667b70276a6664">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:pravin@tripfactory.com" style="color:inherit;">pravin@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Aravind P</div>
                                                 <div class="text-xs text-gray-600">ORN/1600</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff9e8d9e8996919bd18fbf8b8d968f999e9c8b908d86d19c9092">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:aravind.p@tripfactory.com" style="color:inherit;">aravind.p@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Madhuri A</div>
                                                 <div class="text-xs text-gray-600">ORN/1605</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="503d3134382522397e311024223920363133243f22297e333f3d">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:madhuri.a@tripfactory.com" style="color:inherit;">madhuri.a@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Annwesha Pal</div>
                                                 <div class="text-xs text-gray-600">ORN/2574</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a0b04041d0f19020b441a2a1e18031a0c0b091e05181344090507">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:annwesha.p@tripfactory.com" style="color:inherit;">annwesha.p@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Sujanya N S</div>
                                                 <div class="text-xs text-gray-600">ORN/3042</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff8c8a959e91869ebf8b8d968f999e9c8b908d86d19c9092">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:sujanya@tripfactory.com" style="color:inherit;">sujanya@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Abhishek Haldia</div>
                                                 <div class="text-xs text-gray-600">ORN/704 - North</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a5c4c7cdccd6cdc0ce8bcde5d1d7ccd5c3c4c6d1cad7dc8bc6cac8">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:abhishek.h@tripfactory.com" style="color:inherit;">abhishek.h@tripfactory.com</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -2140,22 +2403,22 @@
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Sonia Yadav</div>
                                                 <div class="text-xs text-gray-600">ORN/2447 - North</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="760519181f17580f3602041f061017150219040f5815191b">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:sonia.y@tripfactory.com" style="color:inherit;">sonia.y@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Nikita Kharbanda</div>
                                                 <div class="text-xs text-gray-600">ORN/2904 - North</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="355b5c5e5c41541b5e7541475c45535456415a474c1b565a58">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:nikita.k@tripfactory.com" style="color:inherit;">nikita.k@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">Chhaya Kumari</div>
                                                 <div class="text-xs text-gray-600">ORN/404</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5b3833333a223a1b2f29322b3d3a382f34292275383436">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:chhaya@tripfactory.com" style="color:inherit;">chhaya@tripfactory.com</a></div>
                                             </div>
                                             <div class="bg-purple-50 p-3 rounded border border-purple-200 text-sm">
                                                 <div class="font-semibold">S Mamatha</div>
                                                 <div class="text-xs text-gray-600">ORN/444 + Invoicing</div>
-                                                <div class="text-xs text-purple-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bfd2ded2decbd7deffcbcdd6cfd9dedccbd0cdc691dcd0d2">[email&#160;protected]</a></div>
+                                                <div class="text-xs text-purple-600"><a href="mailto:mamatha@tripfactory.com" style="color:inherit;">mamatha@tripfactory.com</a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -2322,12 +2585,12 @@
 
                     <div class="panel-header">
                         <div class="panel-title text-emerald-700">Post-Booking Operations</div>
-                        <div class="panel-subtitle">Service Execution Hub • 101 Employees • 24h Confirmation SLA</div>
+                        <div class="panel-subtitle">Service Execution Hub • 99 Employees • 24h Confirmation SLA</div>
 
                         <div class="panel-stats">
-                            <div class="stat-item"><div class="stat-value">101</div><div class="stat-label">Destination Ops</div></div>
-                            <div class="stat-item"><div class="stat-value">14</div><div class="stat-label">Team Leads</div></div>
-                            <div class="stat-item"><div class="stat-value">87</div><div class="stat-label">Ops Executives</div></div>
+                            <div class="stat-item"><div class="stat-value">99</div><div class="stat-label">Destination Ops</div></div>
+                            <div class="stat-item"><div class="stat-value">16</div><div class="stat-label">Team Leads & Managers</div></div>
+                            <div class="stat-item"><div class="stat-value">80</div><div class="stat-label">Ops Executives</div></div>
                             <div class="stat-item"><div class="stat-value">9</div><div class="stat-label">Destinations</div></div>
                         </div>
                     </div>
@@ -2348,13 +2611,13 @@
                                     <div class="person-item border-emerald-200">
                                         <div class="person-name">Shashank H M</div>
                                         <div class="person-meta">ORN/83 • Deputy Manager</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b48535a48535a55507b4f49524b5d5a584f54494215585456">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">shashank@tripfactory.com</div>
                                         <div class="person-team">Final Escalation Authority</div>
                                     </div>
                                     <div class="person-item border-emerald-200">
                                         <div class="person-name">Kaushik S</div>
                                         <div class="person-meta">ORN/137</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3b8b2a6a0bbbab893a7a1baa3b5b2b0a7bca1aafdb0bcbe">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">kaushik@tripfactory.com</div>
                                         <div class="person-team">Quality Assurance & SLA Monitoring</div>
                                     </div>
                                 </div>
@@ -2551,7 +2814,7 @@
                             <div class="stat-item"><div class="stat-value">39</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Chat Support</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Team Leaders</div></div>
-                            <div class="stat-item"><div class="stat-value">30</div><div class="stat-label">Support Executives</div></div>
+                            <div class="stat-item"><div class="stat-value">29</div><div class="stat-label">Support Executives</div></div>
                         </div>
                     </div>
 <div style="padding: 12px 20px 16px; border-top: 1px solid #e2e8f0;">
@@ -2571,65 +2834,75 @@
                                     <div class="person-item border-pink-200 bg-pink-50">
                                         <div class="person-name">Akash Kumar <span class="text-xs bg-pink-200 text-pink-800 px-2 py-1 rounded ml-2">Lead</span></div>
                                         <div class="person-meta">ORN/255</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7a6aca6b4afe9acb2aaa6b587b3b5aeb7a1a6a4b3a8b5bee9a4a8aa">[email&#160;protected]</a></div>
+                                        <div class="person-email"><a href="mailto:akash.k@tripfactory.travel" style="color:inherit;">akash.k@tripfactory.travel</a></div>
                                         <div class="person-team">On-trip Monitoring & Response</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Johnson K</div>
                                         <div class="person-meta">ORN/2266</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="016b6e696f726e6f2f6a4175736871676062756e73782f75736077646d">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">johnson.k@tripfactory.travel</div>
+                                        <div class="person-team">Air ticketing operations — booking, issue and amendment management</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Harish R</div>
                                         <div class="person-meta">ORN/2997</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="186a3670796a716b70586c6a71687e797b6c776a61366c6a796e7d74">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">r.harish@tripfactory.travel</div>
+                                        <div class="person-team">Air ticketing operations — booking, issue and amendment management</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Ganesh S</div>
                                         <div class="person-meta">ORN/2998</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fa9d9b949f8992d489ba8e88938a9c9b998e958883d48e889b8c9f96">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">ganesh.s@tripfactory.travel</div>
+                                        <div class="person-team">Air ticketing operations — booking, issue and amendment management</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Shravan Kumar Bind</div>
                                         <div class="person-meta">ORN/3038</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7b4afb5a6b1a6a9e9acb2aaa6b587b3b5aeb7a1a6a4b3a8b5bee9b3b5a6b1a2ab">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">shravan.kumar@tripfactory.travel</div>
+                                        <div class="person-team">Air ticketing operations — booking, issue and amendment management</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Varshini N</div>
                                         <div class="person-meta">ORN/2474</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="23554251504b4a4d4a0d4d6357514a53454240574c515a0d57514255464f">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">varshini.n@tripfactory.travel</div>
+                                        <div class="person-team">Post-booking delivery support — on-trip assistance and coordination</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Ananya C</div>
                                         <div class="person-meta">ORN/2502</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d7c737c73647c337e7e5d696f746d7b7c7e69726f6433696f7c6b7871">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">ananya.c@tripfactory.travel</div>
+                                        <div class="person-team">Post-booking delivery support — on-trip assistance and coordination</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Kavya D R</div>
                                         <div class="person-meta">ORN/2506</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="630802151a024d07112317110a13050200170c111a4d17110215060f">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">kavya.dr@tripfactory.travel</div>
+                                        <div class="person-team">Post-booking delivery support — on-trip assistance and coordination</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Ramisha Antony Raj</div>
                                         <div class="person-meta">ORN/2510</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80f2e1ede9f3e8e1aee1c0f4f2e9f0e6e1e3f4eff2f9aef4f2e1f6e5ec">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">ramisha.a@tripfactory.travel</div>
+                                        <div class="person-team">Post-booking delivery support — on-trip assistance and coordination</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Hari Krishna S</div>
                                         <div class="person-meta">ORN/2514</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f79f96859ed99c859e849f9996b783859e879196948398858ed983859681929b">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">hari.krishna@tripfactory.travel</div>
+                                        <div class="person-team">Post-booking delivery support — on-trip assistance and coordination</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Chandrashekar M</div>
                                         <div class="person-meta">ORN/2515</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f1c171e111b0d1e0c171a141e0d51123f0b0d160f191e1c0b100d06510b0d1e091a13">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">chandrashekar.m@tripfactory.travel</div>
+                                        <div class="person-team">Post-booking delivery support — on-trip assistance and coordination</div>
                                     </div>
                                 </div>
 
                                 <div class="mt-4 bg-pink-50 p-4 rounded-lg border border-pink-200">
                                     <div class="font-semibold text-pink-900 mb-2">Delivery Supervisor</div>
                                     <div class="text-sm"><strong>Kaushik S (ORN/137)</strong> - Escalation Routing & SLA Compliance</div>
-                                    <div class="text-xs text-pink-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="72191307011a1b193206001b02141311061d000b5c111d1f">[email&#160;protected]</a></div>
+                                    <div class="text-xs text-pink-600"><a href="mailto:chandrashekar.m@tripfactory.travel" style="color:inherit;">chandrashekar.m@tripfactory.travel</a></div>
                                 </div>
                             </div>
 
@@ -2765,8 +3038,8 @@
                         <div class="panel-subtitle">Complex Issue Resolution • 5 Employees • 15-Minute Acknowledgement</div>
 
                         <div class="panel-stats">
+                            <div class="stat-item"><div class="stat-value">5</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Escalation Execs</div></div>
-                            <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Escalation Managers</div></div>
                             <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Team Leader</div></div>
                         </div>
                     </div>
@@ -2787,22 +3060,26 @@
                                     <div class="person-item">
                                         <div class="person-name">Abhijeet Ranjan</div>
                                         <div class="person-meta">ORN/2414 • Escalation Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4b5b6bcbdbeb1b1a0faa694a0a6bda4b2b5b7a0bba6adfaa0a6b5a2b1b8">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">abhijeet.r@tripfactory.travel</div>
+                                        <div class="person-team">Manages elevated customer complaints and drives resolution for complex cases</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Saloni U K</div>
                                         <div class="person-meta">ORN/2882 • Escalation Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bbc8dad7d4d5d295ced0fbcfc9d2cbdddad8cfd4c9c295cfc9dacdded7">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">saloni.uk@tripfactory.travel</div>
+                                        <div class="person-team">Manages elevated customer complaints and drives resolution for complex cases</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Sanjay S</div>
                                         <div class="person-meta">ORN/2457 • Escalation Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c7f6d62666d75227f4c626974797f68616f22787e6d7a6960">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">sanjay.s@nexusdmc.travel</div>
+                                        <div class="person-team">Manages elevated customer complaints and drives resolution for complex cases</div>
                                     </div>
                                     <div class="person-item">
                                         <div class="person-name">Nirag K A</div>
                                         <div class="person-meta">ORN/2471 • Escalation Executive</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="513f382330361125233821373032253e23287f25233027343d">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">nirag@tripfactory.travel</div>
+                                        <div class="person-team">Manages elevated customer complaints and drives resolution for complex cases</div>
                                     </div>
                                 </div>
 
@@ -2811,13 +3088,13 @@
                                     <div class="person-item border-red-200">
                                         <div class="person-name">Kaushik S</div>
                                         <div class="person-meta">ORN/137 • Escalation Manager</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e18a80949289888aa195938891878082958e9398cf828e8c">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">kaushik@tripfactory.com</div>
                                         <div class="person-team">RCA Oversight & Approvals</div>
                                     </div>
                                     <div class="person-item border-red-200">
                                         <div class="person-name">Shashank H M</div>
                                         <div class="person-meta">ORN/83 • Escalation Manager</div>
-                                        <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="592a31382a31383732192d2b30293f383a2d362b20773a3634">[email&#160;protected]</a></div>
+                                        <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">shashank@tripfactory.com</div>
                                         <div class="person-team">RCA Oversight & Approvals</div>
                                     </div>
                                 </div>
@@ -2952,7 +3229,7 @@
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">50</div><div class="stat-label">Total Staff</div></div>
                             <div class="stat-item"><div class="stat-value">34</div><div class="stat-label">Product Executives</div></div>
-                            <div class="stat-item"><div class="stat-value">5</div><div class="stat-label">Senior/Director</div></div>
+                            <div class="stat-item"><div class="stat-value">13</div><div class="stat-label">Senior & Management</div></div>
                             <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Interns</div></div>
                         </div>
                     </div>
@@ -2983,25 +3260,25 @@
                             <div class="person-item border-cyan-200 bg-cyan-50">
                                 <div class="person-name">Asad Siddiqui</div>
                                 <div class="person-meta">ORN/42 • Product Head</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#d7b6a4b6b397a3a5bea7b1b6b4a3b8a5aef9b4b8ba"><span class="__cf_email__" data-cfemail="aecfddcfcaeedadcc7dec8cfcddac1dcd780cdc1c3">[email&#160;protected]</span></a></div>
                                 <div class="person-team">Overall product strategy &amp; oversight</div>
                             </div>
                             <div class="person-item border-cyan-200 bg-cyan-50">
                                 <div class="person-name">Disha Mooljee</div>
                                 <div class="person-meta">ORN/39 • Product Manager</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#1d79746e757c33707272717778785d696f746d7b7c7e69726f64337e7270"><span class="__cf_email__" data-cfemail="284c415b40490645474744424d4d685c5a41584e494b5c475a51064b4745">[email&#160;protected]</span></a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">disha.mooljee@tripfactory.com</div>
+                                <a href="mailto:disha.mooljee@tripfactory.com" class="person-email">disha.mooljee@tripfactory.com</a>
                                 <div class="person-team">Product uploads &amp; journey performance — 11 team members</div>
                             </div>
                             <div class="person-item border-cyan-200 bg-cyan-50">
                                 <div class="person-name">Mohsin Ahmed Batla</div>
                                 <div class="person-meta">ORN/2986 • GIT Europe</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#711c1e1902181f5f10133105031801171012051e03085f121e1c"><span class="__cf_email__" data-cfemail="b7dad8dfc4ded999d6d5f7c3c5dec7d1d6d4c3d8c5ce99d4d8da">[email&#160;protected]</span></a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">mohsin.ab@tripfactory.com</div>
                                 <div class="person-team">Group inventory (Europe) — 3 team members</div>
                             </div>
                             <div class="person-item border-cyan-200 bg-cyan-50">
                                 <div class="person-name">Ashish Yadav / Nitin Kumar Madeshia</div>
                                 <div class="person-meta">ORN/2969 / ORN/2944 • Hotel Contracting Automation</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#ddbcaeb5b4aeb59da9afb4adbbbcbea9b2afa4f3beb2b0"><span class="__cf_email__" data-cfemail="fd9c8e95948e95bd898f948d9b9c9e89928f84d39e9290">[email&#160;protected]</span></a></div>
+                                
                                 <div class="person-team">Contract digitization — 4 team members</div>
                             </div>
                         </div>
@@ -3139,6 +3416,7 @@
                             </ul>
                         </div>
                         <div class="content-card" style="margin:0;">
+                            <div style="margin-bottom:6px;"><span class="suggestion-label" style="background:#dc2626;">Internal Assessment</span></div>
                             <div class="card-title" style="color:#dc2626;"><i class="fas fa-exclamation-triangle"></i> Risks &amp; Recommendations</div>
                             <ul style="list-style:none;padding:0;margin:0;">
                                 <li style="padding:5px 0;border-bottom:1px solid #fef2f2;font-size:0.82rem;color:#374151;"><i class="fas fa-times" style="color:#ef4444;margin-right:8px;"></i>Heavy reliance on manual KPI tracking</li>
@@ -3168,7 +3446,7 @@
 
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value">91</div><div class="stat-label">Total Staff</div></div>
-                            <div class="stat-item"><div class="stat-value">25</div><div class="stat-label">SDE-I Engineers</div></div>
+                            <div class="stat-item"><div class="stat-value">38</div><div class="stat-label">Junior Engineers</div></div>
                             <div class="stat-item"><div class="stat-value">16</div><div class="stat-label">Senior/SDE-II</div></div>
                             <div class="stat-item"><div class="stat-value">37</div><div class="stat-label">Interns</div></div>
                         </div>
@@ -3190,28 +3468,28 @@
                                 <i class="fas fa-user-tie text-3xl text-indigo-600 mb-3"></i>
                                 <div class="person-name">Varun Gupta</div>
                                 <div class="person-meta">ORN/03 • CTO</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a5c197e5d1d7ccd5c3c4c6d1cad7dc8bc6cac8">[email&#160;protected]</a></div>
+                                
                                 <div class="person-team">Team: 14</div>
                             </div>
                             <div class="person-item text-center">
                                 <i class="fas fa-users text-3xl text-indigo-600 mb-3"></i>
                                 <div class="person-name">Ram Krishna Garg</div>
                                 <div class="person-meta">ORN/458 • Senior Manager</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e694878bc881879481a692948f968087859289949fc885898b">[email&#160;protected]</a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">ram.garg@tripfactory.com</div>
                                 <div class="person-team">Team: 55</div>
                             </div>
                             <div class="person-item text-center">
                                 <i class="fas fa-users text-3xl text-indigo-600 mb-3"></i>
                                 <div class="person-name">Naman Varshney</div>
                                 <div class="person-meta">ORN/708 • Senior Manager</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acc2cdc1cdc282daecd8dec5dccacdcfd8c3ded582cfc3c1">[email&#160;protected]</a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">naman.v@tripfactory.com</div>
                                 <div class="person-team">Team: 9</div>
                             </div>
                             <div class="person-item text-center">
                                 <i class="fas fa-users text-3xl text-indigo-600 mb-3"></i>
                                 <div class="person-name">Sirajuddin Reniman</div>
                                 <div class="person-meta">ORN/360 • Senior Manager</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="681b011a0902281c1a01180e090b1c071a11460b0705">[email&#160;protected]</a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">siraj@tripfactory.com</div>
                                 <div class="person-team">Team: 13</div>
                             </div>
                         </div>
@@ -3228,6 +3506,8 @@
                             <div class="stat-item"><div class="stat-value">15</div><div class="stat-label">FinOps</div></div>
                             <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">F&amp;A</div></div>
                             <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">Treasury</div></div>
+                            <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">PMO</div></div>
+                            <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Rev. Assurance</div></div>
                         </div>
                     </div>
                     <div style="padding: 12px 20px 16px; border-top: 1px solid #e2e8f0;">
@@ -3447,6 +3727,7 @@
                             </ul>
                         </div>
                         <div class="content-card" style="margin:0;">
+                            <div style="margin-bottom:6px;"><span class="suggestion-label" style="background:#dc2626;">Internal Assessment</span></div>
                             <div class="card-title" style="color:#dc2626;"><i class="fas fa-exclamation-triangle"></i> Exposure Areas &amp; Recommendations</div>
                             <ul style="list-style:none;padding:0;margin:0;">
                                 <li style="padding:5px 0;border-bottom:1px solid #fef2f2;font-size:0.82rem;color:#374151;"><i class="fas fa-times" style="color:#ef4444;margin-right:8px;"></i>Manual processes across most functions</li>
@@ -3478,6 +3759,7 @@
                             <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">HR Operations</div></div>
                             <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Recruitment &amp; TA</div></div>
                             <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Payroll</div></div>
+                            <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">L&amp;D</div></div>
                         </div>
                     </div>
                     <div style="padding: 12px 20px 16px; border-top: 1px solid #e2e8f0;">
@@ -3537,19 +3819,19 @@
                             <div class="person-item border-purple-200 bg-purple-50">
                                 <div class="person-name">Roshan V V</div>
                                 <div class="person-meta">ORN/730 • Recruitment &amp; TA Lead</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#03716c706b626d4377716a73656260776c717a2d606c6e"><span class="__cf_email__" data-cfemail="166479657e77785662647f667077756279646f3875797b">[email&#160;protected]</span></a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">roshan@tripfactory.com</div>
                                 <div class="person-team">Hiring &amp; talent pipeline — 4 team members</div>
                             </div>
                             <div class="person-item border-purple-200 bg-purple-50">
                                 <div class="person-name">Krishna Prasad B P</div>
                                 <div class="person-meta">ORN/2315 • HR Operations Lead</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#4328312a302b2d226d21330337312a33252220372c313a6d202c2e"><span class="__cf_email__" data-cfemail="ec879e859f84828dc28e9cac989e859c8a8d8f98839e95c28f8381">[email&#160;protected]</span></a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">krishna.bp@tripfactory.com</div>
                                 <div class="person-team">Onboarding, BGV, employee lifecycle — 4 team members</div>
                             </div>
                             <div class="person-item border-purple-200 bg-purple-50">
                                 <div class="person-name">Eswara Rao Madugula</div>
                                 <div class="person-meta">ORN/2434 • Payroll &amp; Compensation Lead</div>
-                                <div class="person-email"><a href="/cdn-cgi/l/email-protection#f39680849281dd9eb387819a83959290879c818add909c9e"><span class="__cf_email__" data-cfemail="3d584e4a5c4f13507d494f544d5b5c5e49524f44135e5250">[email&#160;protected]</span></a></div>
+                                <div class="person-email" style="font-size:0.75rem;color:#3b82f6;margin-top:4px;">eswar.m@tripfactory.com</div>
                                 <div class="person-team">Payroll processing &amp; statutory — 2 team members</div>
                             </div>
                         </div>
@@ -3726,18 +4008,20 @@
                 <!-- CPO PANEL -->
                 <div id="cpo-panel" class="dept-panel">
                     <div class="panel-header">
-                        <div class="panel-title" style="color:#7c3aed;">Chief People Officer</div>
-                        <div class="panel-subtitle">People Strategy &amp; Leadership Transformation • Alia Taub</div>
+                        <div style="display:inline-block;background:rgba(251,191,36,0.2);border:1px solid #fbbf24;color:#fbbf24;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:3px;margin-bottom:10px;">⚡ Proposed New Role</div>
+                        <div class="panel-title" style="color:white;">Chief People Officer</div>
+                        <div class="panel-subtitle" style="color:#e9d5ff;">People Strategy &amp; Leadership Transformation • Candidate: Alia Taub</div>
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value" style="color:#7c3aed;">Alia Taub</div><div class="stat-label">Chief People Officer</div></div>
-                            <div class="stat-item"><div class="stat-value" style="color:#7c3aed;">24</div><div class="stat-label">Month Roadmap</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#7c3aed;">24</div><div class="stat-label">Phase Roadmap</div></div>
                             <div class="stat-item"><div class="stat-value" style="color:#7c3aed;">ILM L5</div><div class="stat-label">Leadership Academy</div></div>
                         </div>
                     </div>
 
                     <!-- CPO Profile -->
                     <div class="content-card" style="border:2px solid #7c3aed;background:linear-gradient(135deg,#faf5ff,#f3e8ff);">
-                        <div class="card-title text-purple-700"><i class="fas fa-crown"></i> Chief People Officer — Role Profile</div>
+                        <div style="margin-bottom:8px;"><span class="suggestion-label">Proposed Role — Subject to Approval</span></div>
+                        <div class="card-title text-purple-700" style="color:#7c3aed;font-size:0.9rem;font-weight:700;"><i class="fas fa-crown"></i> Chief People Officer — Role Profile</div>
                         <div style="display:flex;align-items:center;gap:16px;padding:14px;background:white;border-radius:10px;border:1.5px solid #d8b4fe;margin-bottom:14px;">
                             <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.3rem;flex-shrink:0;">AT</div>
                             <div>
@@ -3760,22 +4044,21 @@
                         </div>
                     </div>
 
-                    <!-- 24-Month Roadmap -->
+                    <!-- Multi-Phase Roadmap -->
                     <div class="content-card" style="border:2px solid #7c3aed;">
-                        <div class="card-title text-purple-700"><i class="fas fa-road"></i> 24-Month People &amp; Leadership Transformation Roadmap</div>
+                        <div class="card-title text-purple-700"><i class="fas fa-road"></i> People &amp; Leadership Transformation Roadmap</div>
                         <div style="background:#f3e8ff;border-radius:8px;padding:12px 16px;margin-bottom:16px;border-left:4px solid #7c3aed;">
                             <div style="font-weight:700;color:#4c1d95;font-size:0.88rem;margin-bottom:6px;">Trip Factory: From No HR Infrastructure to Scalable Leadership Organisation</div>
-                            <p style="color:#374151;font-size:0.83rem;line-height:1.6;margin:0;">This 24-month roadmap focuses on two phases: <strong>Year 1 — Protect &amp; Stabilise</strong> (legal compliance, cost visibility, performance accountability, hiring governance) and <strong>Year 2 — Strengthen &amp; Scale</strong> (leadership depth, reward alignment, workforce analytics, Leadership Academy via ILM Level 5).</p>
+                            <p style="color:#374151;font-size:0.83rem;line-height:1.6;margin:0;">This roadmap focuses on two phases: <strong>Phase 1 — Protect &amp; Stabilise</strong> (legal compliance, cost visibility, performance accountability, hiring governance) and <strong>Phase 2 — Strengthen &amp; Scale</strong> (leadership depth, reward alignment, workforce analytics, Leadership Academy via ILM Level 5).</p>
                         </div>
 
-                        <!-- Year 1 -->
+                        <!-- Phase 1 -->
                         <div style="margin-bottom:20px;">
                             <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:8px;">
-                                <i class="fas fa-shield-alt"></i> YEAR 1 — BUILD THE FOUNDATIONS
-                                <span style="margin-left:auto;font-size:0.78rem;font-weight:400;opacity:0.85;">Months 1–12</span>
+                                <i class="fas fa-shield-alt"></i> PHASE 1 — BUILD THE FOUNDATIONS
                             </div>
                             <div style="margin-bottom:14px;">
-                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Q1–Q2 (Months 1–6) — Priority: Protect the Company</div>
+                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Phase 1A — Protect the Company</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div style="background:white;border:1px solid #d8b4fe;border-radius:8px;padding:12px;">
                                         <div style="font-weight:700;color:#6d28d9;font-size:0.82rem;margin-bottom:8px;"><i class="fas fa-balance-scale" style="margin-right:6px;color:#7c3aed;"></i>1. Legal &amp; Compliance Stabilisation</div>
@@ -3801,7 +4084,7 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Q3–Q4 (Months 7–12) — Priority: Introduce Accountability &amp; Cost Discipline</div>
+                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Latter Phase (Phase 1b) — Priority: Introduce Accountability &amp; Cost Discipline</div>
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     <div style="background:white;border:1px solid #d8b4fe;border-radius:8px;padding:12px;">
                                         <div style="font-weight:700;color:#6d28d9;font-size:0.82rem;margin-bottom:8px;"><i class="fas fa-map" style="margin-right:6px;color:#7c3aed;"></i>3. Workforce Mapping &amp; Cost Transparency</div>
@@ -3834,7 +4117,7 @@
                                 </div>
                             </div>
                             <div style="margin-top:14px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:12px 16px;">
-                                <div style="font-weight:700;color:#166534;font-size:0.82rem;margin-bottom:6px;"><i class="fas fa-flag-checkered" style="margin-right:6px;"></i>End of Year 1 — What the Board Should See</div>
+                                <div style="font-weight:700;color:#166534;font-size:0.82rem;margin-bottom:6px;"><i class="fas fa-flag-checkered" style="margin-right:6px;"></i>End of Phase 1 — What the Board Should See</div>
                                 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                                     <div style="font-size:0.75rem;color:#166534;"><i class="fas fa-check-circle" style="margin-right:4px;"></i>Fully compliant multi-country HR governance</div>
                                     <div style="font-size:0.75rem;color:#166534;"><i class="fas fa-check-circle" style="margin-right:4px;"></i>Reliable workforce data</div>
@@ -3846,15 +4129,15 @@
                             </div>
                         </div>
 
-                        <!-- Year 2 -->
+                        <!-- Phase 2 -->
                         <div>
                             <div style="background:linear-gradient(135deg,#6d28d9,#5b21b6);color:white;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:8px;">
-                                <i class="fas fa-rocket"></i> YEAR 2 — BUILD LEADERSHIP CAPACITY &amp; SCALE
-                                <span style="margin-left:auto;font-size:0.78rem;font-weight:400;opacity:0.85;">Months 13–24</span>
+                                <i class="fas fa-rocket"></i> PHASE 2 — BUILD LEADERSHIP CAPACITY &amp; SCALE
+                                
                             </div>
                             <div style="font-size:0.8rem;color:#6d28d9;font-style:italic;margin-bottom:12px;padding:6px 10px;background:#faf5ff;border-radius:6px;">Theme: Productivity, Internal Leadership Pipeline, Strategic Workforce Planning</div>
                             <div style="margin-bottom:14px;">
-                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Q1–Q2 (Months 13–18)</div>
+                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Phase 2A — Build Leadership Capacity</div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div style="background:white;border:1px solid #d8b4fe;border-radius:8px;padding:12px;">
                                         <div style="font-weight:700;color:#6d28d9;font-size:0.82rem;margin-bottom:8px;"><i class="fas fa-chess-king" style="margin-right:6px;color:#7c3aed;"></i>1. Leadership &amp; Succession Framework</div>
@@ -3893,7 +4176,7 @@
                                 <div style="background:#f3e8ff;border-radius:6px;padding:8px 12px;font-size:0.75rem;color:#4c1d95;"><strong>Board Benefits:</strong> Structured internal management pipeline • Reduced external hire dependency • Improved retention of high-potential graduates • Stronger culture alignment • Recognised UK-accredited qualification (ILM)</div>
                             </div>
                             <div>
-                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Q3–Q4 (Months 19–24)</div>
+                                <div style="font-weight:700;color:#7c3aed;font-size:0.84rem;margin-bottom:10px;padding:6px 10px;background:#faf5ff;border-radius:6px;border-left:3px solid #a855f7;"><i class="fas fa-calendar" style="margin-right:6px;"></i>Latter Phase (Phase 2b)</div>
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     <div style="background:white;border:1px solid #d8b4fe;border-radius:8px;padding:12px;">
                                         <div style="font-weight:700;color:#6d28d9;font-size:0.82rem;margin-bottom:8px;"><i class="fas fa-chart-line" style="margin-right:6px;color:#7c3aed;"></i>3. HR Systems &amp; Workforce Analytics</div>
@@ -3925,7 +4208,7 @@
                                 </div>
                             </div>
                             <div style="margin-top:14px;background:linear-gradient(135deg,#7c3aed,#5b21b6);border-radius:10px;padding:16px;">
-                                <div style="font-weight:700;color:white;font-size:0.88rem;margin-bottom:10px;"><i class="fas fa-trophy" style="margin-right:6px;"></i>What Success Looks Like After 24 Months</div>
+                                <div style="font-weight:700;color:white;font-size:0.88rem;margin-bottom:10px;"><i class="fas fa-trophy" style="margin-right:6px;"></i>What Success Looks Like After Multi-Phases</div>
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                                     <div style="background:rgba(255,255,255,0.15);border-radius:6px;padding:8px;font-size:0.75rem;color:white;"><i class="fas fa-check" style="margin-right:4px;color:#c4b5fd;"></i>Fully compliant global HR governance</div>
                                     <div style="background:rgba(255,255,255,0.15);border-radius:6px;padding:8px;font-size:0.75rem;color:white;"><i class="fas fa-check" style="margin-right:4px;color:#c4b5fd;"></i>Structured performance culture</div>
@@ -3942,108 +4225,139 @@
                 </div>
 
                 <!-- MARKETING PANEL -->
-                <div id="marketing-panel" class="dept-panel">
-                    <div class="panel-header">
-                        <div class="panel-title" style="color:#e11d48;">Marketing Department</div>
-                        <div class="panel-subtitle">Social Media • Creative & Digital Advertising • Offline Advertising</div>
+                <div id="europe-panel" class="dept-panel">
+                    <div class="panel-header" style="background:linear-gradient(135deg,#1e3a5f,#1e40af);">
+                        <div class="panel-title" style="color:white;"><i class="fas fa-globe-europe" style="margin-right:8px;"></i>European Resource Hub</div>
+                        <div class="panel-subtitle" style="color:#bfdbfe;">All Trip Factory staff focused on the European market • 103 Employees</div>
                         <div class="panel-stats">
-                            <div class="stat-item"><div class="stat-value" style="color:#e11d48;">Ankush Agarwal</div><div class="stat-label">Dept Lead</div></div>
-                            <div class="stat-item"><div class="stat-value" style="color:#e11d48;">3</div><div class="stat-label">Sub-divisions</div></div>
-                            <div class="stat-item"><div class="stat-value" style="color:#e11d48;">Suggested</div><div class="stat-label">Workflow Design</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">103</div><div class="stat-label">Total Europe Staff</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">36</div><div class="stat-label">B2C Sales</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">20</div><div class="stat-label">B2B Sales</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">20</div><div class="stat-label">Operations</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">13</div><div class="stat-label">Field Sales</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">10</div><div class="stat-label">Visa</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">2</div><div class="stat-label">Product</div></div>
                         </div>
                     </div>
 
-                    <!-- Suggested Notice -->
-                    <div style="padding:12px 20px 0;">
-                        <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:10px 14px;font-size:0.82rem;color:#92400e;">
-                            <i class="fas fa-info-circle" style="margin-right:6px;color:#f59e0b;"></i><strong>Note:</strong> No workflow documentation was received from Trip Factory for the Marketing Department. The workflows and structure below represent our <strong>suggested framework</strong> based on industry best practice for a travel company of this scale.
+                    <!-- Filter Bar -->
+                    <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                        <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:200px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;">
+                            <i class="fas fa-search" style="color:#94a3b8;"></i>
+                            <input type="text" id="europeSearch" placeholder="Search name, role, email, manager..." 
+                                style="border:none;outline:none;background:transparent;width:100%;font-size:0.875rem;color:#1e293b;"
+                                oninput="filterEuropePanel()">
                         </div>
+                        <select id="europeSecFilter" onchange="filterEuropePanel()" style="border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:0.8rem;color:#475569;background:white;cursor:pointer;">
+                            <option value="">All Sections</option>
+                            <option value="Product & Contracting">Product & Contracting</option>
+<option value="B2C Sales">B2C Sales</option>
+<option value="B2B Sales">B2B Sales</option>
+<option value="Key Account Managers">Key Account Managers</option>
+<option value="Field Sales & Tour Managers">Field Sales & Tour Managers</option>
+<option value="Bookings & Operations">Bookings & Operations</option>
+<option value="Documentation & Visa">Documentation & Visa</option>
+                        </select>
+                        <select id="europeLocFilter" onchange="filterEuropePanel()" style="border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:0.8rem;color:#475569;background:white;cursor:pointer;">
+                            <option value="">All Locations</option>
+                            <option value="Bangalore">Bangalore</option>
+<option value="Bengaluru">Bengaluru</option>
+<option value="Chandigarh">Chandigarh</option>
+<option value="Gurgaon">Gurgaon</option>
+<option value="Mumbai">Mumbai</option>
+<option value="Pune">Pune</option>
+                        </select>
+                        <select id="europeRoleFilter" onchange="filterEuropePanel()" style="border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:0.8rem;color:#475569;background:white;cursor:pointer;max-width:220px;">
+                            <option value="">All Roles</option>
+                            <option value="Assistant Manager">Assistant Manager</option>
+<option value="Assistant Manager - Sales">Assistant Manager - Sales</option>
+<option value="Asst.Manager- Visa Operations">Asst.Manager- Visa Operations</option>
+<option value="Business Development Executive">Business Development Executive</option>
+<option value="Contracting and Marketing Head (UK & Europe)">Contracting and Marketing Head (UK & Europe)</option>
+<option value="Destination Expert">Destination Expert</option>
+<option value="Europe Customer Experience">Europe Customer Experience</option>
+<option value="FIT Operations Head - Europe">FIT Operations Head - Europe</option>
+<option value="Key Account Managers (Maharashtra Agents)">Key Account Managers (Maharashtra Agents)</option>
+<option value="Manager- Visa Operations">Manager- Visa Operations</option>
+<option value="Operation Executive">Operation Executive</option>
+<option value="Senior Product Manager">Senior Product Manager</option>
+<option value="Sr. Destination Expert">Sr. Destination Expert</option>
+<option value="Team Lead">Team Lead</option>
+<option value="Team Leader – FIT Europe">Team Leader – FIT Europe</option>
+<option value="Team leader">Team leader</option>
+<option value="Team manager">Team manager</option>
+<option value="Tour Manager/ DE">Tour Manager/ DE</option>
+<option value="Tour Manager/ Field Sales">Tour Manager/ Field Sales</option>
+<option value="Tour Manager/ Field Sales (Pune agents)">Tour Manager/ Field Sales (Pune agents)</option>
+<option value="Visa Executive">Visa Executive</option>
+                        </select>
+                        <button onclick="document.getElementById('europeSearch').value='';document.getElementById('europeSecFilter').value='';document.getElementById('europeLocFilter').value='';document.getElementById('europeRoleFilter').value='';filterEuropePanel();"
+                            style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px;font-size:0.8rem;color:#64748b;cursor:pointer;">
+                            <i class="fas fa-times" style="margin-right:4px;"></i>Clear
+                        </button>
+                        <span id="europeCount" style="font-size:0.8rem;color:#64748b;white-space:nowrap;margin-left:4px;"></span>
                     </div>
 
-                    <!-- Department Lead -->
-                    <div class="content-card">
-                        <div class="card-title" style="color:#e11d48;"><i class="fas fa-user-tie"></i> Department Leadership</div>
-                        <div style="display:flex;align-items:center;gap:16px;padding:12px;background:#fff1f2;border-radius:10px;border:1px solid #fecdd3;">
-                            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#e11d48,#f43f5e);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.1rem;flex-shrink:0;">AA</div>
-                            <div>
-                                <div style="font-weight:700;color:#1e293b;font-size:0.95rem;">Ankush Agarwal</div>
-                                <div style="color:#e11d48;font-size:0.82rem;font-weight:600;">Head – Marketing &amp; Brand</div>
-                                <div style="color:#64748b;font-size:0.8rem;margin-top:2px;">Marketing Department Lead — reports to CPO / CEO</div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Dynamic Cards Container -->
+                    <div id="europeCardsContainer"></div>
 
-                    <!-- Division Overview -->
-                    <div class="content-card">
-                        <div class="card-title" style="color:#e11d48;"><i class="fas fa-sitemap"></i> Suggested Department Structure</div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div style="background:#fff1f2;border:1.5px solid #fecdd3;border-radius:10px;padding:14px;">
-                                <div style="font-weight:700;color:#e11d48;font-size:0.9rem;margin-bottom:6px;"><i class="fas fa-hashtag" style="margin-right:6px;"></i>Social Media</div>
-                                <div style="color:#64748b;font-size:0.8rem;line-height:1.6;">Instagram, Facebook, YouTube, LinkedIn — organic content, community management, influencer partnerships, and engagement reporting.</div>
-                            </div>
-                            <div style="background:#fff1f2;border:1.5px solid #fecdd3;border-radius:10px;padding:14px;">
-                                <div style="font-weight:700;color:#e11d48;font-size:0.9rem;margin-bottom:6px;"><i class="fas fa-paint-brush" style="margin-right:6px;"></i>Creative &amp; Digital Advertising</div>
-                                <div style="color:#64748b;font-size:0.8rem;line-height:1.6;">Graphic design, video production, paid campaigns (Google Ads, Meta Ads), SEO/SEM, performance marketing analytics, and retargeting.</div>
-                            </div>
-                            <div style="background:#fff1f2;border:1.5px solid #fecdd3;border-radius:10px;padding:14px;">
-                                <div style="font-weight:700;color:#e11d48;font-size:0.9rem;margin-bottom:6px;"><i class="fas fa-map-signs" style="margin-right:6px;"></i>Offline Advertising</div>
-                                <div style="color:#64748b;font-size:0.8rem;line-height:1.6;">Print collateral, outdoor media, trade fair &amp; event presence, agent-facing brochures, and B2B partnership marketing materials.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Workflow 1: Social Media -->
-                    <div class="content-card">
-                        <div class="card-title" style="color:#e11d48;"><i class="fas fa-hashtag"></i> Workflow 1 — Social Media Content Cycle</div>
-                        <div class="workflow-steps">
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">1</div><div class="step-content"><div class="step-title">Monthly Content Calendar Planning</div><div class="step-desc">Marketing lead defines destination priorities, promotional themes, and campaign hooks aligned with sales calendar. Output: Approved content calendar.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">2</div><div class="step-content"><div class="step-title">Brief to Creative Team</div><div class="step-desc">Social media manager briefs creative on asset requirements (reels, carousels, stories, static posts). Input from: Product team for destination content, B2C/B2B for promotions.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">3</div><div class="step-content"><div class="step-title">Asset Creation &amp; Review</div><div class="step-desc">Designers and video team produce assets. Internal review cycle (1–2 rounds) with brand/tone sign-off from Marketing Head.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">4</div><div class="step-content"><div class="step-title">Scheduling &amp; Publishing</div><div class="step-desc">Approved content scheduled via social management tool (e.g. Hootsuite, Buffer, or Meta Business Suite). Platform-optimised versions (aspect ratios, captions, hashtags).</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">5</div><div class="step-content"><div class="step-title">Community Management</div><div class="step-desc">Social team monitors comments, DMs, and mentions daily. Escalation path to Customer Care for complaints. Response SLA: within 4 working hours.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">6</div><div class="step-content"><div class="step-title">Influencer &amp; Partnership Activation</div><div class="step-desc">Outreach, contracting, and content approval for influencer collaborations. Usage rights, content guidelines, and deliverable tracking managed by social team.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#e11d48;">7</div><div class="step-content"><div class="step-title">Performance Reporting</div><div class="step-desc">Weekly reach, engagement, follower growth, and conversion data reviewed. Monthly report presented to Marketing Head and leadership. Feeds into next calendar cycle.</div></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Workflow 2: Creative & Digital Advertising -->
-                    <div class="content-card">
-                        <div class="card-title" style="color:#e11d48;"><i class="fas fa-paint-brush"></i> Workflow 2 — Creative &amp; Digital Advertising Campaign</div>
-                        <div class="workflow-steps">
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">1</div><div class="step-content"><div class="step-title">Campaign Brief &amp; Budget Approval</div><div class="step-desc">Campaign objectives, target audience, budget, and timeline defined. Approved by Marketing Head. Budget allocation signed off by Finance.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">2</div><div class="step-content"><div class="step-title">Creative Concept Development</div><div class="step-desc">Creative team develops concept boards, copy direction, and visual style. Reviewed against brand guidelines. Output: Approved creative concept.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">3</div><div class="step-content"><div class="step-title">Asset Production</div><div class="step-desc">Banner ads, video ads, landing pages, and email templates produced. Multiple size variants for digital placements. QA check before hand-off to performance team.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">4</div><div class="step-content"><div class="step-title">Campaign Setup &amp; Launch</div><div class="step-desc">Paid campaign configured in Google Ads / Meta Ads Manager. Audience targeting, bid strategy, and tracking pixels verified. Campaign goes live with defined start/end dates.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">5</div><div class="step-content"><div class="step-title">Live Monitoring &amp; Optimisation</div><div class="step-desc">Daily performance checks: CPL, CTR, ROAS, and conversion rates. Budget reallocation based on performance signals. A/B testing of creatives and audience segments.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">6</div><div class="step-content"><div class="step-title">Landing Page &amp; Funnel Alignment</div><div class="step-desc">Marketing team coordinates with Product/Tech to ensure landing pages match ad messaging. Conversion tracking verified end-to-end through CRM/booking engine.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#c41230;">7</div><div class="step-content"><div class="step-title">Campaign Close &amp; ROI Report</div><div class="step-desc">End-of-campaign analysis: impressions, leads generated, cost-per-booking, and revenue attribution. Learnings documented and fed into next campaign planning cycle.</div></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Workflow 3: Offline Advertising -->
-                    <div class="content-card">
-                        <div class="card-title" style="color:#e11d48;"><i class="fas fa-map-signs"></i> Workflow 3 — Offline Advertising &amp; Trade Events</div>
-                        <div class="workflow-steps">
-                            <div class="step-item"><div class="step-num" style="background:#9f1239;">1</div><div class="step-content"><div class="step-title">Annual Offline Calendar Planning</div><div class="step-desc">Trade fairs, B2B events, print campaigns, and outdoor media planned for the year. Prioritised by geography (key feeder markets) and sales calendar peaks.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#9f1239;">2</div><div class="step-content"><div class="step-title">Vendor &amp; Media Identification</div><div class="step-desc">Print publishers, outdoor media vendors, and event organisers identified and shortlisted. RFQs issued and commercial proposals reviewed by Marketing and Finance.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#9f1239;">3</div><div class="step-content"><div class="step-title">Collateral Design &amp; Production</div><div class="step-desc">Brochures, banners, standees, leaflets, and event kits designed by the creative team. Print specifications confirmed (bleed, resolution, materials). Production with approved vendors.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#9f1239;">4</div><div class="step-content"><div class="step-title">Media Booking &amp; Placement</div><div class="step-desc">Newspaper/magazine inserts, hoardings, and airport media booked. Insertion orders raised, signed by Marketing Head, and filed. Proof of placement confirmed before payment.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#9f1239;">5</div><div class="step-content"><div class="step-title">Event &amp; Trade Fair Execution</div><div class="step-desc">Stand design, logistics, travel arrangements for team, and on-ground materials coordinated. Lead capture process defined (QR, forms, or business cards). Follow-up protocol with B2B sales team.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#9f1239;">6</div><div class="step-content"><div class="step-title">Post-Event &amp; Campaign Tracking</div><div class="step-desc">Leads from events tracked and handed to B2B sales within 48 hours. Print and outdoor campaign impact estimated via brand surveys or regional sales uplift analysis.</div></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Strategic Note -->
-                    <div style="padding:0 20px 20px;">
-                        <div style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fecdd3;border-radius:12px;padding:18px 22px;">
-                            <div style="font-weight:700;color:#e11d48;margin-bottom:8px;font-size:0.9rem;"><i class="fas fa-lightbulb" style="margin-right:6px;"></i>Strategic Recommendations</div>
-                            <p style="color:#374151;font-size:0.875rem;line-height:1.6;margin:0 0 8px;">Marketing should operate as a <strong>growth engine aligned with sales, product, and supply</strong>. Priority actions we recommend: establish a unified marketing calendar shared with B2C and B2B sales teams; implement UTM tracking and attribution modelling across all digital channels; formalise the creative request and approval process to reduce turnaround time; and build a shared asset library accessible to all departments. Trade event ROI should be tracked per event and reviewed quarterly.</p>
-                            <p style="color:#64748b;font-size:0.82rem;margin:0;"><em>These workflows will be updated once formal workflow documentation is received from Trip Factory.</em></p>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- CONTRACTING PANEL -->
+                <div id="marketing-panel" class="dept-panel">
+                    <div class="panel-header" style="background:linear-gradient(135deg,#9f1239,#e11d48);">
+                        <div class="panel-title" style="color:white;"><i class="fas fa-bullhorn" style="margin-right:8px;"></i>Marketing Department</div>
+                        <div class="panel-subtitle" style="color:#fecdd3;">Social Media • Digital • Creative • Content • Advertising • Siliguri</div>
+                        <div class="panel-stats">
+                            <div class="stat-item"><div class="stat-value" style="color:#fda4af;">11</div><div class="stat-label">Total Staff</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#fda4af;">4</div><div class="stat-label">Social Media</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#fda4af;">3</div><div class="stat-label">Digital Marketing</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#fda4af;">2</div><div class="stat-label">Design</div></div>
+                        </div>
+                    </div>
+
+                    <!-- Filter Bar -->
+                    <div style="background:white;border:1px solid #fecdd3;border-radius:10px;padding:14px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                        <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:200px;background:#fff1f2;border:1px solid #fecdd3;border-radius:8px;padding:8px 12px;">
+                            <i class="fas fa-search" style="color:#fb7185;"></i>
+                            <input type="text" id="marketingSearch" placeholder="Search name, role, email..." 
+                                style="border:none;outline:none;background:transparent;width:100%;font-size:0.875rem;color:#1e293b;"
+                                oninput="filterMarketingPanel()">
+                        </div>
+                        <button onclick="document.getElementById('marketingSearch').value='';filterMarketingPanel();"
+                            style="background:#fff1f2;border:1px solid #fecdd3;border-radius:8px;padding:8px 14px;font-size:0.8rem;color:#e11d48;cursor:pointer;">
+                            <i class="fas fa-times" style="margin-right:4px;"></i>Clear
+                        </button>
+                        <span id="marketingCount" style="font-size:0.8rem;color:#64748b;white-space:nowrap;"></span>
+                    </div>
+
+                    <!-- Dept intro -->
+                    <div class="content-card" style="border-left:4px solid #e11d48;background:linear-gradient(135deg,#fff1f2,#ffe4e6);margin-bottom:16px;">
+                        <div class="card-title" style="color:#e11d48;"><i class="fas fa-info-circle"></i> About the Marketing Team</div>
+                        <p style="color:#9f1239;font-size:0.875rem;line-height:1.6;margin:0;">The Marketing team is based in Siliguri and drives Trip Factory's digital presence, brand awareness, and lead generation. The team covers SEO, social media, email marketing, content creation, graphic design, and paid advertising across Google and Meta platforms.</p>
+                    </div>
+
+                    <!-- Dynamic Cards Container -->
+                    <div id="marketingCardsContainer" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">
+<div style="grid-column:1/-1;padding:8px 0 4px;border-bottom:2px solid #9f1239;margin:8px 0 4px;"><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9f1239;">Management</span></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Puja Roy</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Marketing Manager</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Oversees marketing strategy, team coordination and execution across digital, social and creative</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:puja.r@tripfactory.travel" style="color:inherit;">puja.r@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="grid-column:1/-1;padding:8px 0 4px;border-bottom:2px solid #e11d48;margin:8px 0 4px;"><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#e11d48;">Social Media</span></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Tiasha Sanyal</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Social Media Manager</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Leads social media strategy, content calendar and team output across all platforms</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:tiasha.sanyal@tripfactory.travel" style="color:inherit;">tiasha.sanyal@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Twinkle Gupta</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Social Media Marketing</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Manages social campaigns and brand awareness initiatives across platforms</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:twinkle.g@tripfactory.travel" style="color:inherit;">twinkle.g@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Priyanshu Dey</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Social Media Executive</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Creates and publishes content across Instagram, Facebook and other social channels</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:priyanshu.dey@tripfactory.travel" style="color:inherit;">priyanshu.dey@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Shubham Dutta</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Social Media Executive</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Creates and publishes content across Instagram, Facebook and other social channels</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:shubham.dutta@tripfactory.travel" style="color:inherit;">shubham.dutta@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="grid-column:1/-1;padding:8px 0 4px;border-bottom:2px solid #dc2626;margin:8px 0 4px;"><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#dc2626;">Digital Marketing</span></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Koushik Dutta</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Digital Marketing</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Manages SEM, SEO and paid digital campaigns across search and display networks</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:koushik.d@tripfactory.travel" style="color:inherit;">koushik.d@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Manish Kumar Tiwari</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Digital Marketing Specialist</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Develops and optimises digital marketing strategies and performance campaigns</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:manish.kt@tripfactory.travel" style="color:inherit;">manish.kt@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Joydeep Saha</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Digital Marketing Executive</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Executes digital campaigns, monitors analytics and optimises ad spend</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:joydeep.saha@tripfactory.travel" style="color:inherit;">joydeep.saha@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Dibash Sarkar</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">SEO Expert</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Manages organic search rankings, keyword strategy and on-page/off-page optimisation</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:dibash.s@tripfactory.com" style="color:inherit;">dibash.s@tripfactory.com</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="grid-column:1/-1;padding:8px 0 4px;border-bottom:2px solid #b91c1c;margin:8px 0 4px;"><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#b91c1c;">Creative & Design</span></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Mehadi Hasan</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Graphics Designer</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Creates visual assets for campaigns, social media and promotional materials</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:mehadi.h@tripfactory.travel" style="color:inherit;">mehadi.h@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Bikash Ekka</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Graphics Designer</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Creates visual assets for campaigns, social media and promotional materials</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:bikash.gfs@tripfactory.com" style="color:inherit;">bikash.gfs@tripfactory.com</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+<div style="background:white;border:1px solid #fecdd3;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;"><div style="font-weight:700;color:#1e293b;font-size:0.85rem;">Riya Debnath</div><div style="font-size:0.75rem;font-weight:600;color:#9f1239;">Marketing & Promotion</div><div style="font-size:0.73rem;color:#64748b;line-height:1.45;min-height:32px;">Coordinates marketing promotions, partnerships and brand activation campaigns</div><div style="margin-top:4px;padding-top:6px;border-top:1px solid #fef2f2;display:flex;justify-content:space-between;align-items:center;"><a href="mailto:riya@tripfactory.travel" style="color:inherit;">riya@tripfactory.travel</a><span style="font-size:0.68rem;color:#94a3b8;">📍 Siliguri</span></div></div>
+</div>
+
+                </div>
+
                 <div id="contracting-panel" class="dept-panel">
                     <div class="panel-header">
                         <div class="panel-title" style="color:#d97706;">Contracting Department</div>
@@ -4051,14 +4365,15 @@
                         <div class="panel-stats">
                             <div class="stat-item"><div class="stat-value" style="color:#d97706;">Shaurya Pratap Singh</div><div class="stat-label">Contracting Manager</div></div>
                             <div class="stat-item"><div class="stat-value" style="color:#d97706;">5</div><div class="stat-label">Workflows</div></div>
-                            <div class="stat-item"><div class="stat-value" style="color:#d97706;">Suggested</div><div class="stat-label">Workflow Design</div></div>
+                            <div class="stat-item"><div class="stat-value" style="color:#d97706;">Mixed</div><div class="stat-label">Actual + Suggested</div></div>
                         </div>
                     </div>
 
                     <!-- Suggested Notice -->
                     <div style="padding:12px 20px 0;">
-                        <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:10px 14px;font-size:0.82rem;color:#92400e;">
-                            <i class="fas fa-info-circle" style="margin-right:6px;color:#f59e0b;"></i><strong>Note:</strong> No workflow documentation was received from Trip Factory for the Contracting Department. The workflows below represent our <strong>suggested framework</strong> for the full contracting lifecycle — from destination definition through to rates going live on the platform.
+                        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;font-size:0.82rem;color:#166534;display:flex;gap:10px;align-items:flex-start;">
+                            <i class="fas fa-check-circle" style="color:#16a34a;margin-top:1px;flex-shrink:0;"></i>
+                            <div><strong>Workflow 2 (Hotel Contracting)</strong> now shows a side-by-side comparison of the actual Singapore DMC execution model alongside our suggested framework — with gap analysis and alignment notes. Workflows 1, 3, 4, and 5 remain as <strong>suggested frameworks</strong> pending documentation from the team.</div>
                         </div>
                     </div>
 
@@ -4069,21 +4384,25 @@
                             <div class="person-item" style="border-color:#fed7aa;background:#fffbeb;">
                                 <div class="person-name">Ashish Yadav</div>
                                 <div class="person-meta">ORN/2969 • VP – Product &amp; Growth</div>
+                                <a href="mailto:ashish@tripfactory.com" class="person-email">ashish@tripfactory.com</a>
                                 <div class="person-team">Contracting strategic oversight</div>
                             </div>
                             <div class="person-item" style="border-color:#fed7aa;background:#fffbeb;">
                                 <div class="person-name">Shaurya Pratap Singh</div>
                                 <div class="person-meta">ORN/2987 • Contracting Manager</div>
+                                <a href="mailto:shaurya@tripfactory.com" class="person-email">shaurya@tripfactory.com</a>
                                 <div class="person-team">Day-to-day contracting lead</div>
                             </div>
                             <div class="person-item" style="border-color:#fed7aa;background:#fffbeb;">
                                 <div class="person-name">Saif Ansar Khan</div>
                                 <div class="person-meta">ORN/362 • Contracting &amp; Marketing Head – UK &amp; Europe</div>
+                                <a href="mailto:saif@tripfactory.com" class="person-email">saif@tripfactory.com</a>
                                 <div class="person-team">Europe &amp; UK destination contracting</div>
                             </div>
                             <div class="person-item" style="border-color:#fed7aa;background:#fffbeb;">
                                 <div class="person-name">Rajeev Gautam</div>
                                 <div class="person-meta">ORN/66 • Head – North Contracting</div>
+                                <a href="mailto:rajeev@tripfactory.com" class="person-email">rajeev@tripfactory.com</a>
                                 <div class="person-team">North India destination contracting</div>
                             </div>
                             <div class="person-item" style="border-color:#fed7aa;background:#fffbeb;">
@@ -4107,19 +4426,194 @@
                     </div>
 
                     <!-- Workflow 2: Hotel Contracting -->
-                    <div class="content-card">
-                        <div class="card-title" style="color:#d97706;"><i class="fas fa-hotel"></i> Workflow 2 — Hotel Contracting Process</div>
-                        <div class="workflow-steps">
-                            <div class="step-item"><div class="step-num" style="background:#b45309;">1</div><div class="step-content"><div class="step-title">Hotel Targeting &amp; Prioritisation</div><div class="step-desc">Hotels shortlisted by category (3★ / 4★ / 5★), location within destination, and past sales performance. Minimum room inventory requirements and exclusivity possibilities assessed.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#b45309;">2</div><div class="step-content"><div class="step-title">Initial Negotiation &amp; Terms Discussion</div><div class="step-desc">Contracting team contacts hotel sales/revenue manager. Discusses: rate levels, meal plans, release periods, blackout dates, child policies, and minimum night stays. First proposal received from hotel.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#b45309;">3</div><div class="step-content"><div class="step-title">Market Comparison &amp; Benchmarking</div><div class="step-desc">Proposed rates benchmarked against: competitor DMC rates (if available), OTA published rates (Booking.com, Expedia), and previous year's contracted rates. Price gap analysis documented. Output: Rate comparison matrix.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#b45309;">4</div><div class="step-content"><div class="step-title">Counter-Negotiation</div><div class="step-desc">Trip Factory counters based on volume commitment, payment terms, and advance purchase. Key levers: early payment discount, overrides/incentives on volume, complimentary rooms. Output: Agreed commercial framework.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#b45309;">5</div><div class="step-content"><div class="step-title">Contract Preparation &amp; Sign-Off</div><div class="step-desc">Contract drafted including rate schedule, cancellation policy, commission structure, rooming list format, and payment terms. Legal/compliance review if required. Signed by both parties. Output: Executed contract on file.</div></div></div>
-                            <div class="step-item"><div class="step-num" style="background:#b45309;">6</div><div class="step-content"><div class="step-title">Hotel Setup &amp; Content Loading</div><div class="step-desc">Hotel master record created in system — category, room types, amenities, images, and location coordinates. Property description and inclusion details loaded by Product Executives. Output: Hotel live on platform.</div></div></div>
+                    <div class="content-card" style="padding:0;overflow:hidden;border:1.5px solid #e2e8f0;">
+                        
+                        <!-- Section header -->
+                        <div style="background:#1e293b;padding:16px 24px;display:flex;align-items:center;gap:12px;">
+                            <i class="fas fa-hotel" style="color:#fbbf24;font-size:1rem;"></i>
+                            <div>
+                                <div style="color:white;font-weight:700;font-size:0.95rem;letter-spacing:-0.01em;">Workflow 2 — Hotel Contracting Process</div>
+                                <div style="color:#94a3b8;font-size:0.72rem;margin-top:2px;text-transform:uppercase;letter-spacing:0.06em;">Side-by-side review: Actual execution vs. Suggested framework</div>
+                            </div>
                         </div>
+
+                        <!-- Column headers -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #e2e8f0;">
+                            <div style="padding:12px 20px;background:#fef3c7;border-right:2px solid #fbbf24;display:flex;align-items:center;gap:8px;">
+                                <span style="background:#d97706;color:white;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px 8px;border-radius:3px;">Actual</span>
+                                <span style="font-weight:700;color:#92400e;font-size:0.82rem;">Singapore DMC — As Executed</span>
+                                <span style="margin-left:auto;font-size:0.7rem;color:#b45309;font-style:italic;">Source: Contracting team documentation</span>
+                            </div>
+                            <div style="padding:12px 20px;background:#eff6ff;display:flex;align-items:center;gap:8px;">
+                                <span style="background:#2563eb;color:white;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px 8px;border-radius:3px;">Suggested</span>
+                                <span style="font-weight:700;color:#1e40af;font-size:0.82rem;">Recommended Standard Framework</span>
+                                <span style="margin-left:auto;font-size:0.7rem;color:#3b82f6;font-style:italic;">CapeEye proposal</span>
+                            </div>
+                        </div>
+
+                        <!-- Side by side steps -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;">
+
+                            <!-- ACTUAL COLUMN -->
+                            <div style="border-right:2px solid #fbbf24;padding:20px;">
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Demand Intelligence Extraction</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Contracting begins with system-driven demand validation — not hotel outreach. Quote volume trends, Singapore pipeline ranking, forward travel calendar, and group movement indicators reviewed before any supplier contact.</div>
+                                        <div style="margin-top:6px;font-size:0.7rem;color:#b45309;font-weight:600;"><i class="fas fa-lightbulb" style="margin-right:4px;"></i>Key principle: No contracting without demand-backed volume visibility.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Demand-to-Supply Translation</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Quote activity converted into projected room-night requirement across forward travel windows. Segmented into Leisure FIT (primary), Incentive Groups (mid-range), and Corporate Groups (premium). Supply requirement quantified before any hotel engagement.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Cluster Prioritisation & Hotel Targeting</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">System data used to identify primary demand cluster (Little India – volume driver) and premium clusters (Orchard / Marina / Sentosa). Top quoted and high-conversion properties extracted. Outcome: three-tier contracting list — Core Volume, Premium Yield, Group-Compatible.</div>
+                                        <div style="margin-top:6px;font-size:0.7rem;color:#b45309;font-weight:600;"><i class="fas fa-lightbulb" style="margin-right:4px;"></i>"We contract system-relevant hotels, not nice hotels."</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Strategic Supplier Engagement</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Chain-level partnerships leveraged (Accor, Millennium). Direct GM/DOS approach where required. ORN positioned as a structured volume partner — not a rate requester. Formal proposal submitted: room-night projection, 300-day demand plan, utilisation forecast, buying rate framework, commitment logic.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Commercial Negotiation</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Structured around static net buying rate, validity alignment, release period, group policy framework, and volume commitment balance. All discussions backed by live demand visibility. Negotiation: <em>Rate + Volume + Risk Sharing</em> — not price-only.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Contract Finalisation</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Upon alignment: proposal formalised, agreement executed, commitment documented, commercial controls validated. No informal rate activation. No verbal rate usage.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #fef9c3;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#d97706;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">7</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">System Integration & Activation</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Post-contract: rate normalisation, margin structure validation, inventory upload, QA review, activation across B2B and B2C. Single commercial control structure maintained. <strong>Commercial control before distribution scale.</strong></div>
+                                    </div>
+                                </div>
+
+                                <!-- Operating principles box -->
+                                <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:12px 14px;margin-top:4px;">
+                                    <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#92400e;margin-bottom:8px;">Operating Principles</div>
+                                    <div style="font-size:0.75rem;color:#78350f;line-height:1.6;">
+                                        Demand-first model &nbsp;•&nbsp; Volume-structured negotiation<br>
+                                        Cluster-prioritised supply build &nbsp;•&nbsp; Commercially controlled activation<br>
+                                        System-integrated distribution strategy
+                                    </div>
+                                    <div style="margin-top:8px;font-size:0.72rem;color:#92400e;font-style:italic;">"This is the repeatable framework for scalable destination contracting."</div>
+                                </div>
+
+                            </div>
+
+                            <!-- SUGGESTED COLUMN -->
+                            <div style="padding:20px;background:#fafcff;">
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #dbeafe;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Hotel Targeting & Prioritisation</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Hotels shortlisted by category (3★ / 4★ / 5★), location within destination, and past sales performance. Minimum room inventory and exclusivity possibilities assessed.</div>
+                                        <div style="margin-top:6px;background:#dbeafe;border-radius:4px;padding:5px 8px;font-size:0.7rem;color:#1e40af;"><i class="fas fa-arrow-right" style="margin-right:4px;"></i><strong>Gap vs Actual:</strong> Actual starts with demand data first — this step is an output of step 3 in the actual model, not the entry point.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #dbeafe;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Initial Negotiation & Terms Discussion</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Contact hotel sales/revenue manager. Discuss rate levels, meal plans, release periods, blackout dates, child policies, minimum night stays. Receive first proposal.</div>
+                                        <div style="margin-top:6px;background:#dbeafe;border-radius:4px;padding:5px 8px;font-size:0.7rem;color:#1e40af;"><i class="fas fa-arrow-right" style="margin-right:4px;"></i><strong>Gap:</strong> Actual approach submits a structured demand-backed proposal to the hotel — not just a discussion. Leverage built before contact.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #dbeafe;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Market Comparison & Benchmarking</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Proposed rates benchmarked against competitor DMC rates, OTA published rates (Booking.com, Expedia), and previous contracted rates. Price gap analysis documented. Output: Rate comparison matrix.</div>
+                                        <div style="margin-top:6px;background:#dcfce7;border-radius:4px;padding:5px 8px;font-size:0.7rem;color:#166534;"><i class="fas fa-check" style="margin-right:4px;"></i><strong>Aligned:</strong> Actual model also uses live demand data throughout negotiation to validate commercial terms.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #dbeafe;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Counter-Negotiation</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Counter based on volume commitment, payment terms, advance purchase. Key levers: early payment discount, overrides/incentives on volume, complimentary rooms. Output: Agreed commercial framework.</div>
+                                        <div style="margin-top:6px;background:#dcfce7;border-radius:4px;padding:5px 8px;font-size:0.7rem;color:#166534;"><i class="fas fa-check" style="margin-right:4px;"></i><strong>Aligned:</strong> Actual model uses same logic — "Rate + Volume + Risk Sharing." Well matched.</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #dbeafe;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Contract Preparation & Sign-Off</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Contract drafted: rate schedule, cancellation policy, commission structure, rooming list format, payment terms. Legal/compliance review if required. Signed by both parties. Output: Executed contract on file.</div>
+                                        <div style="margin-top:6px;background:#dcfce7;border-radius:4px;padding:5px 8px;font-size:0.7rem;color:#166534;"><i class="fas fa-check" style="margin-right:4px;"></i><strong>Aligned:</strong> Actual: "No informal activation. No verbal rate usage. Governance enforced."</div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #dbeafe;">
+                                    <div style="width:28px;height:28px;border-radius:50%;background:#2563eb;color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</div>
+                                    <div>
+                                        <div style="font-weight:700;color:#1e293b;font-size:0.82rem;margin-bottom:3px;">Hotel Setup & Content Loading</div>
+                                        <div style="color:#64748b;font-size:0.78rem;line-height:1.5;">Hotel master record created — category, room types, amenities, images, location. Property description and inclusions loaded by Product Executives. Output: Hotel live on platform.</div>
+                                        <div style="margin-top:6px;background:#dcfce7;border-radius:4px;padding:5px 8px;font-size:0.7rem;color:#166534;"><i class="fas fa-check" style="margin-right:4px;"></i><strong>Aligned:</strong> Actual: rate normalisation → margin validation → inventory upload → QA → B2B & B2C activation. Same intent.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Suggested additions box -->
+                                <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px 14px;margin-top:4px;">
+                                    <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#1e40af;margin-bottom:8px;">Suggested Additions to Current Framework</div>
+                                    <div style="display:flex;flex-direction:column;gap:6px;">
+                                        <div style="font-size:0.75rem;color:#1e3a8a;display:flex;gap:6px;"><i class="fas fa-plus-circle" style="color:#3b82f6;margin-top:2px;flex-shrink:0;"></i><span><strong>Pre-engagement demand step:</strong> Formalise the demand extraction and room-night projection as mandatory inputs before any supplier is contacted — codify what Singapore contracting already does.</span></div>
+                                        <div style="font-size:0.75rem;color:#1e3a8a;display:flex;gap:6px;"><i class="fas fa-plus-circle" style="color:#3b82f6;margin-top:2px;flex-shrink:0;"></i><span><strong>Volume commitment model:</strong> Build the structured proposal template (300-day demand plan, utilisation forecast, buying rate framework) as a reusable document for all destinations.</span></div>
+                                        <div style="font-size:0.75px;color:#1e3a8a;display:flex;gap:6px;font-size:0.75rem;"><i class="fas fa-plus-circle" style="color:#3b82f6;margin-top:2px;flex-shrink:0;"></i><span><strong>Central contract archive:</strong> All executed agreements stored centrally with version control and renewal alerts — currently a gap in the suggested framework.</span></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Summary footer -->
+                        <div style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:14px 24px;display:grid;grid-template-columns:1fr 1fr;gap:0;">
+                            <div style="border-right:1px solid #e2e8f0;padding-right:20px;">
+                                <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;color:#92400e;margin-bottom:6px;">Key Strength — Actual Model</div>
+                                <div style="font-size:0.78rem;color:#64748b;line-height:1.5;">The Singapore execution model is genuinely sophisticated — demand-first, data-driven, volume-backed. It is more advanced than the suggested framework which assumes a traditional supplier-led approach. The actual model should become the <strong>Trip Factory standard.</strong></div>
+                            </div>
+                            <div style="padding-left:20px;">
+                                <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;color:#1e40af;margin-bottom:6px;">Key Gap — To Close</div>
+                                <div style="font-size:0.78rem;color:#64748b;line-height:1.5;">The suggested framework adds structure around content loading, QA, and system activation — steps the actual model covers but doesn't formalise. Merging the two would create a complete, repeatable, and governed contracting framework for all destinations.</div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- Workflow 3: Rate Upload -->
+<!-- Workflow 3: Rate Upload -->
                     <div class="content-card">
                         <div class="card-title" style="color:#d97706;"><i class="fas fa-upload"></i> Workflow 3 — Rate Loading &amp; System Upload</div>
                         <div class="workflow-steps">
@@ -4206,7 +4700,7 @@
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Panel navigation
 function showPanel(name) {
     document.querySelectorAll('.dept-panel').forEach(p => p.classList.remove('active'));
@@ -4306,6 +4800,51 @@ function renderStaffTable(list) {
             <td style="padding:10px 12px;"><a href="mailto:${s.email}" style="color:#0891b2;font-size:0.8rem;">${s.email || '—'}</a></td>
         </tr>
     `).join('');
+}
+
+const EUROPE_STAFF_DATA = [{"name": "Varsha R", "role": "Destination Expert", "email": "varsha.r@tripfactory.com", "location": "Bengaluru", "manager": "Sonu Kumar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Suhail Ahamed S", "role": "Destination Expert", "email": "suhail.as@nexusdmc.travel", "location": "Bengaluru", "manager": "Sonu Kumar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Siji Sam", "role": "Destination Expert", "email": "siji.sam@nexusdmc.travel", "location": "Bengaluru", "manager": "Sonu Kumar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Shivakumar S Y", "role": "Destination Expert", "email": "s.shivakumar@tripfactory.travel", "location": "Bengaluru", "manager": "Sonu Kumar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Bakhtiyar Maaz Ahmed", "role": "Destination Expert", "email": "bakhtiyar.ma@tripfactory.travel", "location": "Bengaluru", "manager": "Sonu Kumar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Sarita Devi", "role": "Destination Expert", "email": "sarita.s@nexusdmc.travel", "location": "Gurgaon", "manager": "Vivek Gurjar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Mohd Shuaib", "role": "Destination Expert", "email": "mohdshuaib.k@nexusdmc.travel", "location": "Gurgaon", "manager": "Vivek Gurjar", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Satyendra jagdsih Shah", "role": "Tour Manager/ DE", "email": "satyendra.shah@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Siddharth Ramakant Bhoir", "role": "Tour Manager/ DE", "email": "siddharth.bhoir@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Avinash Dattaram Ghatge", "role": "Tour Manager/ DE", "email": "avinash.dg@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Dipesh Kiran Kasar", "role": "Tour Manager/ DE", "email": "dipesh.kasar@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Prasad Harishchandra Kawli", "role": "Tour Manager/ DE", "email": "prasad.kavli@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Tejas C", "role": "Destination Expert", "email": "tejas.c@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Vijrambha Gowda", "role": "Destination Expert", "email": "vijrambha.g@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Gudla Aryan Rajesh", "role": "Destination Expert", "email": "aryan.r@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Solomon Nikhil D", "role": "Destination Expert", "email": "nikhil.sd@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Mohammed Daaniyal", "role": "Destination Expert", "email": "daaniyal.m@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Glen Somanna A", "role": "Destination Expert", "email": "glen.sa@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Vidya Ramananda Bhat", "role": "Destination Expert", "email": "vidhya.rb@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sushmitha S", "role": "Destination Expert", "email": "", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Bindu B M", "role": "Destination Expert", "email": "bindu.sr@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sri Vidhya M S", "role": "Destination Expert", "email": "shree.vidhya@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sharanya M V", "role": "Destination Expert", "email": "sharanya.mv@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Shrinithin F X", "role": "Destination Expert", "email": "shrinithin.fx@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Abhay kiran v", "role": "Destination Expert", "email": "abhay.kv@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sanjana K", "role": "Destination Expert", "email": "sanjana.k@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sanjana Hariprasad", "role": "Destination Expert", "email": "sanjana.h@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Kavyashree H P", "role": "Destination Expert", "email": "", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Rishika Solanki", "role": "Destination Expert", "email": "", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Saran S", "role": "Destination Expert", "email": "saran.s@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Ranjan Gowda R", "role": "Destination Expert", "email": "ranjan.gr@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sudipta Mondal", "role": "Destination Expert", "email": "sudipta.m@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Shaistha N", "role": "Destination Expert", "email": "shaistha@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Janavi G", "role": "Destination Expert", "email": "janavi.g@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Nisarga C R", "role": "Destination Expert", "email": "nisarga.cr@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Ananya S Gowda", "role": "Destination Expert", "email": "ananya.s@nexusdmc.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Brijesh Krishna M N", "role": "Destination Expert", "email": "brijesh.mn@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Mohana M", "role": "Destination Expert", "email": "m.mohana@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Prakash B", "role": "Destination Expert", "email": "prakash.b@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Subramaya M", "role": "Destination Expert", "email": "subramanya.m@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Mohith K V", "role": "Destination Expert", "email": "mohith.kv@nexusdmc.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Jyothi S Vara", "role": "Destination Expert", "email": "jyothi.sv@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Yashaswini A", "role": "Destination Expert", "email": "yashaswini.a@tripfactory.travel", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sandhya M", "role": "Destination Expert", "email": "m.sandhya@tripfactory.com", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Prakash M", "role": "Assistant Manager - Sales", "email": "prakash.m@tripfactory.com", "location": "Bengaluru", "manager": "Martina Vasan", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Noopur Paresh Mehta", "role": "Sr. Destination Expert", "email": "noopur.mehta@tripfactory.travel", "location": "Mumbai", "manager": "Lalit S Sabaji Sawant", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Sujata Dambarsingh Budha", "role": "Destination Expert", "email": "sujata.db@tripfactory.travel", "location": "Mumbai", "manager": "Lalit S Sabaji Sawant", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Raheela Abdul Aziz Kaware", "role": "Key Account Managers (Maharashtra Agents)", "email": "raheela.kaware@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Key Account Managers", "dept": "B2B", "sub_dept": "Europe - KAM"}, {"name": "Minal Siddhesh Bhagat", "role": "Key Account Managers (Maharashtra Agents)", "email": "bhagat.m@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Key Account Managers", "dept": "B2B", "sub_dept": "Europe - KAM"}, {"name": "Prashant Kalendra Manchkar", "role": "Tour Manager/ Field Sales", "email": "p.manchkar@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Jayesh P Rathod", "role": "Tour Manager/ Field Sales", "email": "jayesh.rathod@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Rohan Sham Deshpande", "role": "Tour Manager/ Field Sales", "email": "rohan.deshpande@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Shree Vasant Deshmukh", "role": "Tour Manager/ Field Sales", "email": "shree.deshmukh@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Ganesh Sorte", "role": "Tour Manager/ Field Sales", "email": "ganesh.sorte@tripfactory.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Jagdish prabhakar Kerkar", "role": "Tour Manager/ Field Sales", "email": "jagdish.kerkar@tripfactory.travel", "location": "Mumbai", "manager": "Sagar Padmakar Joshi", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Nirvan KAILASH Yelve", "role": "Tour Manager/ Field Sales", "email": "nirvan.yelve@tripfactory.travel", "location": "Mumbai", "manager": "Sagar Padmakar Joshi", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Ishan Mukesh Sheode", "role": "Business Development Executive", "email": "ishan@nexusdmc.travel", "location": "Mumbai", "manager": "Gauri Shankar Gaud", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Ravinder Singh Lamba", "role": "Tour Manager/ Field Sales", "email": "ravinder.sl@tripfactory.travel", "location": "Mumbai", "manager": "Sagar Padmakar Joshi", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Siddharth Pagar", "role": "Tour Manager/ Field Sales", "email": "siddharth.pagar@tripfactory.travel", "location": "Mumbai", "manager": "Sagar Padmakar Joshi", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Raaj Navgrahe", "role": "Tour Manager/ Field Sales (Pune agents)", "email": "raaj.n@tripfactory.travel", "location": "Pune", "manager": "Akbar Pasha", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Sourabh Nivas Kamble", "role": "Business Development Executive", "email": "sourabh.nk@nexusdmc.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Afaq Safeer Khan", "role": "Business Development Executive", "email": "afaq.s@nexusdmc.travel", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Field Sales & Tour Managers", "dept": "B2B", "sub_dept": "Field Sales"}, {"name": "Lalit S Sabaji Sawant", "role": "Team Lead", "email": "lalit.s@tripfactory.travel", "location": "Mumbai", "manager": "Pulkit Gupta", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Martina Vasan", "role": "Assistant Manager", "email": "martina.v@tripfactory.com", "location": "Bangalore", "manager": "Lalitha Krishna", "section": "B2C Sales", "dept": "B2C", "sub_dept": "Europe"}, {"name": "Pulkit Gupta", "role": "Assistant Manager", "email": "pulkit.gupta@tripfactory.com", "location": "Chandigarh", "manager": "Lalitha Krishna", "section": "B2B Sales", "dept": "B2B/B2C", "sub_dept": "Europe"}, {"name": "Sonu Kumar", "role": "Assistant Manager", "email": "sonu.k@tripfactory.com", "location": "Bangalore", "manager": "Lalitha Krishna", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Vivek Gurjar", "role": "Team leader", "email": "vivek.g@nexusdmc.com", "location": "Gurgaon", "manager": "Vikas S", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Sagar Padmakar Joshi", "role": "Team manager", "email": "sagar@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Amir Shafi Shaikh", "role": "Team manager", "email": "amir.s@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Saif Ansar Khan", "role": "Contracting and Marketing Head (UK & Europe)", "email": "saif@tripfactory.com", "location": "Mumbai", "manager": "Amit Aggarwal", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Nishanth D Shekar", "role": "Assistant Manager", "email": "nishanth.d@tripfactory.com", "location": "Bengaluru", "manager": "Lalitha P", "section": "B2B Sales", "dept": "B2B", "sub_dept": "Europe"}, {"name": "Rutika Rajendra More", "role": "Operation Executive", "email": "rutika.rm@tripfactory.travel", "location": "Mumbai", "manager": "Ira Mukund Bhatt", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Shoaib Chand Ansari", "role": "Operation Executive", "email": "shoaib.a@tripfactory.com", "location": "Mumbai", "manager": "Amir Shafi Shaikh", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Zeenath Begum", "role": "Operation Executive", "email": "zeenath.b@tripfactory.travel", "location": "Bengaluru", "manager": "Balachandar H Benakatti", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Siddhesh Shankar Kurlekar", "role": "Operation Executive", "email": "siddhesh.kurlekar@tripfactory.travel", "location": "Mumbai", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Shekhar Santosh Patil", "role": "Operation Executive", "email": "shekhar.patil@tripfactory.com", "location": "Mumbai", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Delita Agnelo Fernandes", "role": "Operation Executive", "email": "delita.f@tripfactory.com", "location": "Mumbai", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Riddhi Dhirendra Waghela", "role": "Team Leader \u2013 FIT Europe", "email": "riddhi@tripfactory.com", "location": "Mumbai", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Bhimashankar Ravindra Kulkarni", "role": "Operation Executive", "email": "bhimashankar.k@tripfactory.com", "location": "Bengaluru", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Nisarga C S", "role": "Operation Executive", "email": "nisarga.cs@tripfactory.travel", "location": "Bengaluru", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Prekha Vadhini T", "role": "Operation Executive", "email": "prekha.v@tripfactory.travel", "location": "Bengaluru", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Veer Khandu Shinde", "role": "Operation Executive", "email": "veerkhandu.s@nexusdmc.travel", "location": "Bengaluru", "manager": "Puja Onekar", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Zehra Khatoon Khan", "role": "Operation Executive", "email": "zehra.k@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Mahammadhusain Saeed Bijale", "role": "Operation Executive", "email": "mahammad.h@tripfactory.travel", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Gnana Deepa Nadar", "role": "Operation Executive", "email": "deepa.n@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Aaron Parmar", "role": "Operation Executive", "email": "aaron.p@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Ira Mukund Bhatt", "role": "Europe Customer Experience", "email": "ira.b@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Puja Vivekanand Onekar", "role": "FIT Operations Head - Europe", "email": "puja@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Balachandar H Benakatti", "role": "Operation Executive", "email": "balachandar.h@tripfactory.com", "location": "Bengaluru", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Abhishek Mohanta", "role": "Operation Executive", "email": "abhishek.m@tripfactory.com", "location": "Gurgaon", "manager": "Saif Ansar Khan", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Patricia Denzil", "role": "Operation Executive", "email": "patricia.d@tripfactory.travel", "location": "Bengaluru", "manager": "Shipra Meshram", "section": "Bookings & Operations", "dept": "Booking Ops", "sub_dept": "Europe"}, {"name": "Ronak Raju Dhanwani", "role": "Operation Executive", "email": "ronak@tripfactory.com", "location": "Mumbai", "manager": "Saif Ansar Khan", "section": "Product & Contracting", "dept": "Product", "sub_dept": "Hotel contracting"}, {"name": "Disha Mooljee", "role": "Senior Product Manager", "email": "disha.mooljee@tripfactory.com", "location": "Mumbai", "manager": "Vinay Gupta", "section": "Product & Contracting", "dept": "Product", "sub_dept": "Platform product upload"}, {"name": "Naina Premchand Kamat", "role": "Visa Executive", "email": "naina.k@tripfactory.com", "location": "Mumbai", "manager": "Sonia Yadav", "section": "Documentation & Visa", "dept": "Documentation  and Visa", "sub_dept": "Visa"}, {"name": "Abhishek Haldia", "role": "Visa Executive", "email": "abhishek.h@tripfactory.com", "location": "Gurgaon", "manager": "Sanjeev Kumar Chhikara", "section": "Documentation & Visa", "dept": "Documentation  and Visa", "sub_dept": "Long Hual"}, {"name": "Aravind P", "role": "Visa Executive", "email": "aravind.p@tripfactory.com", "location": "Bengaluru", "manager": "Reginold Simon", "section": "Documentation & Visa", "dept": "Documentation  and Visa", "sub_dept": "Long Hual"}, {"name": "Madhuri A", "role": "Visa Executive", "email": "madhuri.a@tripfactory.com", "location": "Bengaluru", "manager": "Reginold Simon", "section": "Documentation & Visa", "dept": "Documentation  and Visa", "sub_dept": "Long Hual"}, {"name": "Pravir Pathak", "role": "Visa Executive", "email": "pravin@tripfactory.com", "location": "Bengaluru", "manager": "Reginold Simon", "section": "Documentation & Visa", "dept": "Documentation  and Visa", "sub_dept": "Long Hual"}]};
+
+function filterMarketingPanel() {
+    const search = document.getElementById('marketingSearch').value.toLowerCase();
+    const cards = document.querySelectorAll('#marketingCardsContainer > div:not([style*="grid-column"])');
+    let shown = 0;
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const visible = !search || text.includes(search);
+        card.style.display = visible ? '' : 'none';
+        if (visible) shown++;
+    });
+    const headers = document.querySelectorAll('#marketingCardsContainer > div[style*="grid-column"]');
+    headers.forEach(h => h.style.display = '');
+    const countEl = document.getElementById('marketingCount');
+    if (countEl) countEl.textContent = search ? shown + ' result' + (shown !== 1 ? 's' : '') : '';
+}
+
+function filterEuropePanel() {
+    const search = (document.getElementById('europeSearch')?.value || '').toLowerCase();
+    const section = document.getElementById('europeSectionFilter')?.value || '';
+    const location = document.getElementById('europeLocationFilter')?.value || '';
+    const role = document.getElementById('europeRoleFilter')?.value || '';
+    
+    const cards = document.querySelectorAll('#europeCardsContainer > div:not([style*="grid-column"])');
+    let shown = 0;
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const cardSection = card.getAttribute('data-section') || '';
+        const cardLocation = card.getAttribute('data-location') || '';
+        const cardRole = card.getAttribute('data-role') || '';
+        
+        const matchSearch = !search || text.includes(search);
+        const matchSection = !section || cardSection === section;
+        const matchLocation = !location || cardLocation === location;
+        const matchRole = !role || cardRole.includes(role);
+        
+        const visible = matchSearch && matchSection && matchLocation && matchRole;
+        card.style.display = visible ? '' : 'none';
+        if (visible) shown++;
+    });
+    const countEl = document.getElementById('europeCount');
+    if (countEl) countEl.textContent = shown + ' of 103 staff shown';
 }
 </script>
 </body>
