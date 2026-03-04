@@ -1010,12 +1010,10 @@
 </style>
 <base target="_blank">
 
-    <!-- Firebase SDK -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-      import { getDatabase, ref, set, get, onValue, push, serverTimestamp }
-        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
+    <!-- Firebase Compat SDK (v9 compat — works as regular scripts, no import needed) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script>
       const firebaseConfig = {
         apiKey: "AIzaSyC1JX4-7EWVceTDfgRKU-jd0vqUxMZm7lw",
         authDomain: "tripfactory-hr.firebaseapp.com",
@@ -1025,16 +1023,12 @@
         messagingSenderId: "189316237646",
         appId: "1:189316237646:web:40202b0d3eb4306dabb61f"
       };
-
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
-      window._tfDB = db;
-      window._tfRef = ref;
-      window._tfSet = set;
-      window._tfGet = get;
-      window._tfOnValue = onValue;
-      window._tfPush = push;
-      window._tfServerTimestamp = serverTimestamp;
+      firebase.initializeApp(firebaseConfig);
+      window._tfDB        = firebase.database();
+      window._tfRef       = (db, path) => firebase.database().ref(path);
+      window._tfSet       = (ref, val) => ref.set(val);
+      window._tfGet       = (ref)      => ref.once('value');
+      window._tfOnValue   = (ref, cb)  => ref.on('value', cb);
       window._firebaseReady = true;
       document.dispatchEvent(new Event('firebaseReady'));
     </script>
@@ -1042,7 +1036,7 @@
     <style id="interview-styles">
       /* ── Login gate ──────────────────────────────────── */
       #ivLoginOverlay {
-        display:none; position:fixed; inset:0; background:rgba(15,23,42,0.85);
+        display: none; position:fixed; inset:0; background:rgba(15,23,42,0.85);
         z-index:9999; align-items:center; justify-content:center;
       }
       #ivLoginOverlay.visible { display:flex; }
@@ -1246,6 +1240,7 @@
       .iv-locked-msg { font-size:0.78rem; color:#94a3b8; font-style:italic; }
     </style>
 </head>
+<body>
 <div id="ivReviewerBar" class="iv-reviewer-bar no-print">
   <span>🔒 Interview Mode &nbsp;|&nbsp; Reviewer: <span id="ivReviewerName" class="iv-reviewer-name"></span></span>
   <button class="iv-logout-btn" onclick="ivLogout()">Sign out</button>
@@ -1271,7 +1266,6 @@
   </div>
 </div>
 
-<body>
 <div id="ivReviewerBar" class="iv-reviewer-bar no-print">
   <span>🔒 Interview Mode &nbsp;|&nbsp; Reviewer: <span id="ivReviewerName" class="iv-reviewer-name"></span></span>
   <button class="iv-logout-btn" onclick="ivLogout()">Sign out</button>
@@ -6736,10 +6730,21 @@ const IV_REVIEWER   = 'Alia Taub';            // reviewer name shown
 const IV_FB_PATH    = 'tripfactory/interviews'; // Firebase path
 
 const IV_PANEL_DEPT = {
-  b2c:'b2c', b2b:'b2b',
-  flights:'ops', visa:'ops', operations:'ops', delivery:'ops', escalation:'ops',
-  product:'product', tech:'tech', finance:'finance',
-  hr:'hr', cpo:'hr', europe:'ops', marketing:'b2c', contracting:'product'
+  b2c:'b2c',        b2b:'b2b',
+  flights:'ops',    visa:'ops',     operations:'ops',
+  delivery:'ops',   escalation:'ops',
+  product:'product', tech:'tech',  finance:'finance',
+  hr:'hr',           cpo:'hr',
+  europe:'ops',      marketing:'b2c', contracting:'product'
+};
+// For interview tab rendering: which panel ID maps to which _panel value
+const IV_PANEL_FILTER = {
+  b2c:'b2c',        b2b:'b2b',
+  flights:'flights', visa:'visa',   operations:'operations',
+  delivery:'operations', escalation:'operations',
+  product:'product', tech:'tech',   finance:'finance',
+  hr:'hr',           cpo:'hr',
+  europe:'europe',   marketing:'b2c', contracting:'product'
 };
 
 let ivUnlocked   = false;
@@ -6748,10 +6753,34 @@ let ivAllStaff   = [];   // flat list of all staff
 let ivCurrentPanel = 'executive';
 
 // ── Startup ─────────────────────────────────────────────────────────
+function ivGetPanel(s, dept) {
+  // Assign staff member to their display panel based on dept + sub_dept
+  if (dept === 'b2c')     return 'b2c';
+  if (dept === 'b2b')     return 'b2b';
+  if (dept === 'product') return 'product';
+  if (dept === 'tech')    return 'tech';
+  if (dept === 'finance') return 'finance';
+  if (dept === 'hr')      return 'hr';
+  if (dept === 'ops') {
+    const sub = (s.sub_dept || '').toLowerCase();
+    if (sub === 'flights') return 'flights';
+    if (sub === 'visa')    return 'visa';
+    if (sub === 'europe')  return 'europe';
+    // All other ops staff (care, domestic, delivery roles etc)
+    // are shown across operations/delivery/escalation panels
+    // Interview reviews for these are accessible from the operations panel
+    return 'operations';
+  }
+  return dept;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Build flat staff list from STAFF_DATA
+  // Build flat staff list from STAFF_DATA with panel assignment
   Object.entries(STAFF_DATA).forEach(([dept, list]) => {
-    list.forEach(s => ivAllStaff.push({...s, _dept: dept}));
+    list.forEach(s => {
+      const panel = ivGetPanel(s, dept);
+      ivAllStaff.push({...s, _dept: dept, _panel: panel});
+    });
   });
 
   // Show unlock link always
@@ -6766,6 +6795,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── Firebase connection ──────────────────────────────────────────────
 function ivConnectFirebase() {
   if (!window._tfDB) return;
+  // Listen for connection state
+  const connRef = window._tfRef(window._tfDB, '.info/connected');
+  window._tfOnValue(connRef, snap => {
+    window._tfConnected = snap.val();
+  });
+  // Listen for all interview data
   const r = window._tfRef(window._tfDB, IV_FB_PATH);
   window._tfOnValue(r, snap => {
     ivReviews = snap.val() || {};
@@ -6792,6 +6827,11 @@ function ivDoLogin() {
     document.getElementById('ivHeaderBtn').style.display = 'inline-flex';
     document.getElementById('ivLockedMsg').style.display = 'none';
     ivRefreshCurrentView();
+    // If user unlocked from within a dept tab, render that panel
+    if (window._ivPendingPanel) {
+      ivRenderDeptPanel(window._ivPendingPanel);
+      window._ivPendingPanel = null;
+    }
   } else {
     document.getElementById('ivLoginErr').style.display = 'block';
     document.getElementById('ivPasswordInput').select();
@@ -6833,7 +6873,13 @@ function ivSwitchTab(panelId, tab) {
     interviewArea.classList.add('visible');
     tabContent.classList.remove('active');
     tabInterview.classList.add('active');
-    if (!ivUnlocked) return; // locked state shown by default HTML
+    if (!ivUnlocked) {
+      // Show locked message, store which panel was requested
+      const locked = document.getElementById('ivDeptLocked-' + panelId);
+      if (locked) locked.style.display = 'block';
+      window._ivPendingPanel = panelId;
+      return;
+    }
     ivRenderDeptPanel(panelId);
   }
 }
@@ -6857,12 +6903,18 @@ function ivOpenMaster() {
 // ── Refresh current view after data load ─────────────────────────────
 function ivRefreshCurrentView() {
   if (!ivUnlocked) return;
-  // Unlock all dept panes
+  // Hide all locked messages
   document.querySelectorAll('[id^="ivDeptLocked-"]').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('[id^="ivDeptContent-"]').forEach(el => el.style.display = 'none');
   // Update dot indicators
   ivUpdateDots();
-  // If interviews panel is showing, re-render master
+  // Render any dept interview area that is currently visible
+  document.querySelectorAll('[id^="ivInterviewArea-"]').forEach(el => {
+    if (el.classList.contains('visible')) {
+      const panelId = el.id.replace('ivInterviewArea-', '');
+      ivRenderDeptPanel(panelId);
+    }
+  });
+  // If master interviews panel is active, show it
   const intPanel = document.getElementById('interviews-panel');
   if (intPanel && intPanel.classList.contains('active')) {
     document.getElementById('ivMasterLocked').style.display = 'none';
@@ -6910,12 +6962,16 @@ function ivKey(s) {
 
 // ── Render dept interview pane ────────────────────────────────────────
 function ivRenderDeptPanel(panelId) {
+  // Hide locked message, show content
+  const locked = document.getElementById('ivDeptLocked-' + panelId);
+  if (locked) locked.style.display = 'none';
   const deptContent = document.getElementById('ivDeptContent-' + panelId);
   if (!deptContent) return;
   deptContent.style.display = 'block';
 
-  const deptKey = IV_PANEL_DEPT[panelId];
-  const staff   = STAFF_DATA[deptKey] || [];
+  // Use IV_PANEL_FILTER to find the correct _panel key for this tab
+  const filterPanel = (typeof IV_PANEL_FILTER !== 'undefined' && IV_PANEL_FILTER[panelId]) || panelId;
+  const staff = ivAllStaff.filter(s => s._panel === filterPanel);
   const list    = document.getElementById('ivPersonList-' + panelId);
   if (!list) return;
 
@@ -7106,8 +7162,9 @@ function ivDraftSave(key, field, val) {
 }
 
 // ── Save to Firebase ──────────────────────────────────────────────────
-async function ivSaveReview(key, panelId) {
-  if (!window._tfDB) { alert('Firebase not connected. Please check your internet connection.'); return; }
+async async function ivSaveReview(key, panelId) {
+  if (!window._tfDB) { alert('Firebase not initialised. Please refresh the page.'); return; }
+  if (window._tfConnected === false) { alert('No internet connection. Please check your network and try again.'); return; }
   
   const btn = document.querySelector(`#ivCard-${key} .iv-save-btn`);
   if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
@@ -7166,12 +7223,15 @@ function ivRenderMaster() {
   const searchF  = (document.getElementById('ivSearchPerson')?.value || '').toLowerCase();
 
   const deptLabels = {
-    b2c:'B2C Sales', b2b:'B2B Sales', ops:'Operations',
-    product:'Product', tech:'Technology', finance:'Finance', hr:'HR'
+    b2c:'B2C Sales', b2b:'B2B Sales',
+    flights:'Flights', visa:'Visa & Docs', operations:'Post-Booking Ops',
+    delivery:'Global Delivery', escalation:'Escalation', europe:'Europe Hub',
+    product:'Product', tech:'Technology', finance:'Finance',
+    hr:'HR', cpo:'CPO Office', marketing:'Marketing', contracting:'Contracting'
   };
 
   let rows = ivAllStaff.filter(s => {
-    if (deptF && s._dept !== deptF) return false;
+    if (deptF && s._panel !== deptF) return false;
     const r = ivReviews[ivKey(s)] || {};
     if (statusF && (r.status || 'not-reviewed') !== statusF) return false;
     if (actionF && !(r.actions || {})[actionF]) return false;
@@ -7195,10 +7255,10 @@ function ivRenderMaster() {
     const perf = r.performance || '—';
     const statusBg = status==='complete'?'#dcfce7':status==='in-progress'?'#fef3c7':'#f1f5f9';
     const statusFg = status==='complete'?'#166534':status==='in-progress'?'#92400e':'#64748b';
-    return `<tr onclick="ivJumpToReview('${ivKey(s)}','${s._dept}')">
+    return `<tr onclick="ivJumpToReview('${ivKey(s)}','${s._panel}')">
       <td style="font-weight:700;color:#1e293b;">${s.name}</td>
       <td style="color:#475569;">${s.role}</td>
-      <td><span style="background:#f1f5f9;padding:2px 7px;border-radius:10px;font-size:0.75rem;">${deptLabels[s._dept]||s._dept}</span></td>
+      <td><span style="background:#f1f5f9;padding:2px 7px;border-radius:10px;font-size:0.75rem;">${deptLabels[s._panel]||s._panel}</span></td>
       <td style="color:#64748b;">${s.location||'—'}</td>
       <td style="color:#f97316;letter-spacing:-1px;">${cap}</td>
       <td style="color:#f97316;letter-spacing:-1px;">${sk}</td>
@@ -7212,10 +7272,8 @@ function ivRenderMaster() {
 }
 
 // ── Jump to person's review from master table ─────────────────────────
-function ivJumpToReview(key, dept) {
-  // Find which panel to open
-  const panelForDept = Object.entries(IV_PANEL_DEPT).find(([p,d]) => d===dept)?.[0] || dept;
-  showPanel(panelForDept);
+function ivJumpToReview(key, panel) {
+  showPanel(panel);
   setTimeout(() => {
     ivSwitchTab(panelForDept, 'interviews');
     setTimeout(() => {
@@ -7250,6 +7308,9 @@ function ivExportCSV() {
 }
 
 // ── Hook showPanel to track current panel ────────────────────────────
+const _origShowPanel = showPanel;
+// Wrap existing showPanel (already sets ivCurrentPanel — but extend for interview btn)
+const _baseShowPanel = window.showPanel;
 
 </script>
 </body>
