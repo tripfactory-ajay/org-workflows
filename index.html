@@ -1009,8 +1009,294 @@
         }
 </style>
 <base target="_blank">
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import { getDatabase, ref, set, get, onValue, push, serverTimestamp }
+        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyC1JX4-7EWVceTDfgRKU-jd0vqUxMZm7lw",
+        authDomain: "tripfactory-hr.firebaseapp.com",
+        databaseURL: "https://tripfactory-hr-default-rtdb.firebaseio.com",
+        projectId: "tripfactory-hr",
+        storageBucket: "tripfactory-hr.firebasestorage.app",
+        messagingSenderId: "189316237646",
+        appId: "1:189316237646:web:40202b0d3eb4306dabb61f"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      window._tfDB = db;
+      window._tfRef = ref;
+      window._tfSet = set;
+      window._tfGet = get;
+      window._tfOnValue = onValue;
+      window._tfPush = push;
+      window._tfServerTimestamp = serverTimestamp;
+      window._firebaseReady = true;
+      document.dispatchEvent(new Event('firebaseReady'));
+    </script>
+
+    <style id="interview-styles">
+      /* ── Login gate ──────────────────────────────────── */
+      #ivLoginOverlay {
+        display:none; position:fixed; inset:0; background:rgba(15,23,42,0.85);
+        z-index:9999; align-items:center; justify-content:center;
+      }
+      #ivLoginOverlay.visible { display:flex; }
+      .iv-login-box {
+        background:white; border-radius:14px; padding:36px 40px; width:360px;
+        box-shadow:0 24px 60px rgba(0,0,0,0.3); text-align:center;
+      }
+      .iv-login-box h2 { color:#0f172a; font-size:1.2rem; font-weight:700; margin:0 0 4px; }
+      .iv-login-box p  { color:#64748b; font-size:0.85rem; margin:0 0 20px; }
+      .iv-login-input {
+        width:100%; padding:10px 14px; border:1.5px solid #e2e8f0;
+        border-radius:8px; font-size:0.9rem; margin-bottom:10px;
+        font-family:inherit; outline:none; transition:border 0.2s;
+      }
+      .iv-login-input:focus { border-color:#f97316; }
+      .iv-login-btn {
+        width:100%; padding:11px; background:#f97316; color:white; border:none;
+        border-radius:8px; font-size:0.92rem; font-weight:700; cursor:pointer;
+        font-family:inherit; transition:background 0.2s;
+      }
+      .iv-login-btn:hover { background:#ea580c; }
+      .iv-login-err { color:#dc2626; font-size:0.8rem; margin-top:6px; display:none; }
+
+      /* ── Interview tab button in dept panels ─────────── */
+      .iv-tab-btn {
+        display:inline-flex; align-items:center; gap:6px;
+        padding:7px 16px; background:#f8fafc; border:1.5px solid #e2e8f0;
+        border-radius:8px 8px 0 0; font-size:0.82rem; font-weight:600;
+        color:#475569; cursor:pointer; font-family:inherit;
+        transition:all 0.15s; margin-right:4px;
+      }
+      .iv-tab-btn.active, .iv-tab-btn:hover {
+        background:#0f172a; color:white; border-color:#0f172a;
+      }
+      .iv-tab-btn .iv-dot {
+        width:7px; height:7px; border-radius:50%; background:#94a3b8; flex-shrink:0;
+      }
+      .iv-tab-btn.has-notes .iv-dot { background:#f97316; }
+
+      /* ── Interview panel (inside dept panel) ─────────── */
+      .iv-dept-panel {
+        display:none; padding:16px 0 8px;
+      }
+      .iv-dept-panel.visible { display:block; }
+
+      /* ── Person review cards ─────────────────────────── */
+      .iv-person-card {
+        background:white; border:1px solid #e2e8f0; border-radius:10px;
+        margin-bottom:14px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.06);
+      }
+      .iv-card-header {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:12px 16px; background:#f8fafc; border-bottom:1px solid #e2e8f0;
+        cursor:pointer; user-select:none;
+      }
+      .iv-card-header:hover { background:#f1f5f9; }
+      .iv-card-person { display:flex; align-items:center; gap:12px; }
+      .iv-avatar {
+        width:38px; height:38px; border-radius:50%; background:#0f172a;
+        display:flex; align-items:center; justify-content:center;
+        color:white; font-weight:700; font-size:0.8rem; flex-shrink:0;
+      }
+      .iv-person-name { font-weight:700; color:#1e293b; font-size:0.9rem; }
+      .iv-person-meta { font-size:0.75rem; color:#64748b; margin-top:1px; }
+      .iv-status-badge {
+        padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:700;
+        text-transform:uppercase; letter-spacing:0.05em; flex-shrink:0;
+      }
+      .iv-status-not-reviewed  { background:#f1f5f9; color:#64748b; }
+      .iv-status-in-progress   { background:#fef3c7; color:#92400e; }
+      .iv-status-complete      { background:#dcfce7; color:#166534; }
+      .iv-chevron { color:#94a3b8; transition:transform 0.2s; font-size:0.8rem; }
+      .iv-card-body {
+        display:none; padding:16px;
+        background:white;
+      }
+      .iv-card-body.open { display:block; }
+
+      /* ── Review form fields ──────────────────────────── */
+      .iv-form-grid {
+        display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px;
+      }
+      .iv-field label {
+        display:block; font-size:0.75rem; font-weight:700; color:#475569;
+        text-transform:uppercase; letter-spacing:0.05em; margin-bottom:5px;
+      }
+      .iv-scale {
+        display:flex; gap:4px;
+      }
+      .iv-scale-btn {
+        flex:1; padding:6px 2px; border:1.5px solid #e2e8f0; border-radius:6px;
+        font-size:0.8rem; font-weight:600; background:white; cursor:pointer;
+        color:#94a3b8; transition:all 0.15s; text-align:center; font-family:inherit;
+      }
+      .iv-scale-btn:hover { border-color:#f97316; color:#f97316; }
+      .iv-scale-btn.selected { background:#0f172a; border-color:#0f172a; color:white; }
+      .iv-scale-btn.selected.score-1 { background:#dc2626; border-color:#dc2626; }
+      .iv-scale-btn.selected.score-2 { background:#f97316; border-color:#f97316; }
+      .iv-scale-btn.selected.score-3 { background:#f59e0b; border-color:#f59e0b; }
+      .iv-scale-btn.selected.score-4 { background:#10b981; border-color:#10b981; }
+      .iv-scale-btn.selected.score-5 { background:#059669; border-color:#059669; }
+
+      .iv-select {
+        width:100%; padding:8px 10px; border:1.5px solid #e2e8f0; border-radius:7px;
+        font-size:0.85rem; font-family:inherit; color:#1e293b; background:white;
+        outline:none; cursor:pointer; transition:border 0.2s;
+      }
+      .iv-select:focus { border-color:#f97316; }
+
+      .iv-checkboxes { display:flex; flex-direction:column; gap:5px; }
+      .iv-checkbox-label {
+        display:flex; align-items:center; gap:7px;
+        font-size:0.82rem; color:#475569; cursor:pointer;
+      }
+      .iv-checkbox-label input[type=checkbox] {
+        width:14px; height:14px; accent-color:#f97316; cursor:pointer;
+      }
+
+      .iv-notes-area {
+        width:100%; min-height:90px; padding:10px 12px;
+        border:1.5px solid #e2e8f0; border-radius:8px;
+        font-size:0.85rem; font-family:inherit; color:#1e293b;
+        resize:vertical; outline:none; transition:border 0.2s; box-sizing:border-box;
+      }
+      .iv-notes-area:focus { border-color:#f97316; }
+
+      .iv-save-row {
+        display:flex; align-items:center; justify-content:space-between;
+        margin-top:12px; padding-top:12px; border-top:1px solid #f1f5f9;
+      }
+      .iv-save-btn {
+        padding:8px 22px; background:#f97316; color:white; border:none;
+        border-radius:8px; font-size:0.85rem; font-weight:700; cursor:pointer;
+        font-family:inherit; transition:background 0.2s;
+      }
+      .iv-save-btn:hover { background:#ea580c; }
+      .iv-save-btn:disabled { background:#94a3b8; cursor:not-allowed; }
+      .iv-saved-ts { font-size:0.75rem; color:#94a3b8; }
+
+      /* ── Master interviews panel ─────────────────────── */
+      #interviews-panel .iv-master-header {
+        display:flex; align-items:center; justify-content:space-between;
+        margin-bottom:16px; flex-wrap:wrap; gap:10px;
+      }
+      .iv-master-filters {
+        display:flex; gap:8px; flex-wrap:wrap;
+      }
+      .iv-master-filter {
+        padding:6px 12px; border:1.5px solid #e2e8f0; border-radius:7px;
+        font-size:0.8rem; font-family:inherit; background:white;
+        color:#475569; cursor:pointer; outline:none; transition:border 0.2s;
+      }
+      .iv-master-filter:focus { border-color:#f97316; }
+      .iv-progress-bar {
+        background:#f1f5f9; border-radius:6px; height:8px; margin-bottom:16px; overflow:hidden;
+      }
+      .iv-progress-fill {
+        height:100%; background:linear-gradient(90deg,#f97316,#0f172a);
+        border-radius:6px; transition:width 0.4s;
+      }
+      .iv-progress-text { font-size:0.8rem; color:#64748b; margin-bottom:10px; }
+      .iv-master-table { width:100%; border-collapse:collapse; }
+      .iv-master-table th {
+        background:#0f172a; color:white; padding:9px 12px; text-align:left;
+        font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; font-weight:700;
+      }
+      .iv-master-table td {
+        padding:9px 12px; border-bottom:1px solid #f1f5f9; font-size:0.82rem;
+        vertical-align:middle;
+      }
+      .iv-master-table tr:hover td { background:#f8fafc; cursor:pointer; }
+      .iv-export-btn {
+        padding:8px 18px; background:#0f172a; color:white; border:none;
+        border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;
+        font-family:inherit; transition:background 0.2s;
+      }
+      .iv-export-btn:hover { background:#1e293b; }
+
+      /* ── Reviewer info strip ─────────────────────────── */
+      .iv-reviewer-bar {
+        display:none; align-items:center; justify-content:space-between;
+        padding:6px 16px; background:#0f172a; color:white; font-size:0.8rem;
+      }
+      .iv-reviewer-bar.visible { display:flex; }
+      .iv-reviewer-name { font-weight:600; color:#f97316; }
+      .iv-logout-btn {
+        padding:4px 12px; background:rgba(255,255,255,0.1); color:white;
+        border:1px solid rgba(255,255,255,0.2); border-radius:6px;
+        font-size:0.75rem; cursor:pointer; font-family:inherit;
+      }
+      .iv-logout-btn:hover { background:rgba(255,255,255,0.2); }
+
+      /* ── Interviews button in content header ─────────── */
+      .iv-open-btn {
+        display:inline-flex; align-items:center; gap:6px;
+        padding:8px 16px; background:#0f172a; color:white; border:none;
+        border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer;
+        font-family:inherit; transition:background 0.2s;
+      }
+      .iv-open-btn:hover { background:#1e293b; }
+      .iv-locked-msg { font-size:0.78rem; color:#94a3b8; font-style:italic; }
+    </style>
 </head>
+<div id="ivReviewerBar" class="iv-reviewer-bar no-print">
+  <span>🔒 Interview Mode &nbsp;|&nbsp; Reviewer: <span id="ivReviewerName" class="iv-reviewer-name"></span></span>
+  <button class="iv-logout-btn" onclick="ivLogout()">Sign out</button>
+</div>
+
+<!-- Interview Login Overlay -->
+<div id="ivLoginOverlay">
+  <div class="iv-login-box">
+    <div style="width:48px;height:48px;border-radius:12px;background:#f97316;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+      <i class="fas fa-user-shield" style="color:white;font-size:1.3rem;"></i>
+    </div>
+    <h2>Interview Review Access</h2>
+    <p>Enter the reviewer password to access HR interview notes</p>
+    <input class="iv-login-input" type="password" id="ivPasswordInput" placeholder="Password" onkeydown="if(event.key==='Enter')ivDoLogin()">
+    <button class="iv-login-btn" onclick="ivDoLogin()">Unlock</button>
+    <div class="iv-login-err" id="ivLoginErr">Incorrect password. Please try again.</div>
+    <div style="margin-top:14px;">
+      <button onclick="document.getElementById('ivLoginOverlay').classList.remove('visible')" 
+        style="background:none;border:none;color:#94a3b8;font-size:0.8rem;cursor:pointer;font-family:inherit;">
+        Cancel — return to directory
+      </button>
+    </div>
+  </div>
+</div>
+
 <body>
+<div id="ivReviewerBar" class="iv-reviewer-bar no-print">
+  <span>🔒 Interview Mode &nbsp;|&nbsp; Reviewer: <span id="ivReviewerName" class="iv-reviewer-name"></span></span>
+  <button class="iv-logout-btn" onclick="ivLogout()">Sign out</button>
+</div>
+
+<!-- Interview Login Overlay -->
+<div id="ivLoginOverlay">
+  <div class="iv-login-box">
+    <div style="width:48px;height:48px;border-radius:12px;background:#f97316;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+      <i class="fas fa-user-shield" style="color:white;font-size:1.3rem;"></i>
+    </div>
+    <h2>Interview Review Access</h2>
+    <p>Enter the reviewer password to access HR interview notes</p>
+    <input class="iv-login-input" type="password" id="ivPasswordInput" placeholder="Password" onkeydown="if(event.key==='Enter')ivDoLogin()">
+    <button class="iv-login-btn" onclick="ivDoLogin()">Unlock</button>
+    <div class="iv-login-err" id="ivLoginErr">Incorrect password. Please try again.</div>
+    <div style="margin-top:14px;">
+      <button onclick="document.getElementById('ivLoginOverlay').classList.remove('visible')" 
+        style="background:none;border:none;color:#94a3b8;font-size:0.8rem;cursor:pointer;font-family:inherit;">
+        Cancel — return to directory
+      </button>
+    </div>
+  </div>
+</div>
+
     <div class="app-container">
         <!-- Left Sidebar -->
         <aside class="sidebar no-print">
@@ -1239,6 +1525,19 @@
 
                 <!-- HR badge update -->
             </div>
+        
+                <!-- Interviews section -->
+                <div class="nav-section-title" style="margin-top:16px;">HR Reviews</div>
+                <div class="nav-item" id="ivNavItem" onclick="ivOpenMaster()" style="border-left:3px solid transparent;">
+                    <div class="nav-icon" style="background:#0f172a;">
+                        <i class="fas fa-clipboard-list text-white text-xs"></i>
+                    </div>
+                    <div class="nav-text">
+                        <div class="nav-label">Interviews</div>
+                        <div class="nav-count" id="ivNavCount">Review tracker</div>
+                    </div>
+                </div>
+
         </aside>
 
         <!-- Main Content -->
@@ -1252,6 +1551,14 @@
                     <button onclick="printPanel()" style="display:flex;align-items:center;gap:8px;padding:10px 20px;background:#f97316;color:white;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.2s;" onmouseover="this.style.background='#ea580c'" onmouseout="this.style.background='#f97316'">
                         <i class="fas fa-print"></i> Print Directory
                     </button>
+                        <button class="iv-open-btn no-print" id="ivHeaderBtn" onclick="ivOpenForCurrentPanel()" style="display:none;">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Interview Notes</span>
+                        </button>
+                        <span class="iv-locked-msg no-print" id="ivLockedMsg">
+                            <i class="fas fa-lock" style="margin-right:4px;"></i>
+                            <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;">Unlock interview mode</a>
+                        </span>
                 </div>
             </header>
 
@@ -1446,6 +1753,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for b2c -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-b2c" onclick="ivSwitchTab('b2c','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-b2c" onclick="ivSwitchTab('b2c','interviews')">
+                            <span class="iv-dot" id="ivDot-b2c"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-b2c">
+
 
                     <div class="content-grid">
                         <div>
@@ -1661,7 +1980,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-b2c" class="iv-dept-panel">
+                        <div id="ivDeptLocked-b2c" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-b2c" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — B2C Sales
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-b2c" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-b2c">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- B2B SALES PANEL -->
                 <div id="b2b-panel" class="dept-panel">
@@ -1685,6 +2032,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for b2b -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-b2b" onclick="ivSwitchTab('b2b','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-b2b" onclick="ivSwitchTab('b2b','interviews')">
+                            <span class="iv-dot" id="ivDot-b2b"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-b2b">
+
 
                     <div class="content-grid">
                         <div>
@@ -1905,7 +2264,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-b2b" class="iv-dept-panel">
+                        <div id="ivDeptLocked-b2b" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-b2b" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — B2B Sales
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-b2b" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-b2b">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- FLIGHTS PANEL -->
                 <div id="flights-panel" class="dept-panel">
@@ -1929,6 +2316,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for flights -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-flights" onclick="ivSwitchTab('flights','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-flights" onclick="ivSwitchTab('flights','interviews')">
+                            <span class="iv-dot" id="ivDot-flights"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-flights">
+
 
                     <div class="content-grid">
                         <div>
@@ -2214,7 +2613,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-flights" class="iv-dept-panel">
+                        <div id="ivDeptLocked-flights" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-flights" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Operations
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-flights" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-flights">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- VISA PANEL -->
                 <div id="visa-panel" class="dept-panel">
@@ -2238,6 +2665,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for visa -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-visa" onclick="ivSwitchTab('visa','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-visa" onclick="ivSwitchTab('visa','interviews')">
+                            <span class="iv-dot" id="ivDot-visa"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-visa">
+
 
                     <div class="content-grid">
                         <div>
@@ -2483,7 +2922,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-visa" class="iv-dept-panel">
+                        <div id="ivDeptLocked-visa" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-visa" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Operations
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-visa" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-visa">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- OPERATIONS PANEL -->
                 <div id="operations-panel" class="dept-panel">
@@ -2507,6 +2974,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for operations -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-operations" onclick="ivSwitchTab('operations','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-operations" onclick="ivSwitchTab('operations','interviews')">
+                            <span class="iv-dot" id="ivDot-operations"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-operations">
+
 
                     <div class="content-grid">
                         <div>
@@ -2706,7 +3185,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-operations" class="iv-dept-panel">
+                        <div id="ivDeptLocked-operations" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-operations" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Operations
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-operations" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-operations">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- DELIVERY PANEL -->
                 <div id="delivery-panel" class="dept-panel">
@@ -2730,6 +3237,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for delivery -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-delivery" onclick="ivSwitchTab('delivery','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-delivery" onclick="ivSwitchTab('delivery','interviews')">
+                            <span class="iv-dot" id="ivDot-delivery"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-delivery">
+
 
                     <div class="content-grid">
                         <div>
@@ -2933,7 +3452,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-delivery" class="iv-dept-panel">
+                        <div id="ivDeptLocked-delivery" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-delivery" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Operations
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-delivery" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-delivery">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- ESCALATION PANEL -->
                 <div id="escalation-panel" class="dept-panel">
@@ -2956,6 +3503,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for escalation -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-escalation" onclick="ivSwitchTab('escalation','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-escalation" onclick="ivSwitchTab('escalation','interviews')">
+                            <span class="iv-dot" id="ivDot-escalation"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-escalation">
+
 
                     <div class="content-grid">
                         <div>
@@ -3123,7 +3682,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-escalation" class="iv-dept-panel">
+                        <div id="ivDeptLocked-escalation" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-escalation" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Operations
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-escalation" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-escalation">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- PRODUCT PANEL -->
                 <div id="product-panel" class="dept-panel">
@@ -3142,6 +3729,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for product -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-product" onclick="ivSwitchTab('product','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-product" onclick="ivSwitchTab('product','interviews')">
+                            <span class="iv-dot" id="ivDot-product"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-product">
+
 
                     <!-- Dept Intro -->
                     <div class="content-card">
@@ -3339,7 +3938,35 @@
                             <p style="color:#374151;font-size:0.875rem;line-height:1.6;margin:0;">The Product framework is strategically mature and commercially aligned. The opportunity lies in automation, real-time analytics, and dashboard consolidation. <strong>The key KPI remains: Sales Conversion Rate per Journey.</strong></p>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-product" class="iv-dept-panel">
+                        <div id="ivDeptLocked-product" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-product" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Product
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-product" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-product">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- TECHNOLOGY PANEL -->
                 <div id="tech-panel" class="dept-panel">
@@ -3359,6 +3986,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for tech -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-tech" onclick="ivSwitchTab('tech','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-tech" onclick="ivSwitchTab('tech','interviews')">
+                            <span class="iv-dot" id="ivDot-tech"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-tech">
+
 
                     <div class="content-card">
                         <div class="card-title text-indigo-700">
@@ -3397,7 +4036,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-tech" class="iv-dept-panel">
+                        <div id="ivDeptLocked-tech" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-tech" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Technology
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-tech" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-tech">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- FINANCE PANEL -->
                 <div id="finance-panel" class="dept-panel">
@@ -3418,6 +4085,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for finance -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-finance" onclick="ivSwitchTab('finance','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-finance" onclick="ivSwitchTab('finance','interviews')">
+                            <span class="iv-dot" id="ivDot-finance"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-finance">
+
 
                     <!-- Dept Intro -->
                     <div class="content-card">
@@ -3649,7 +4328,35 @@
                             <p style="color:#374151;font-size:0.875rem;line-height:1.6;margin:0;">Finance demonstrates strong operational discipline and structured governance. However, scale and growth will demand: <strong>automation of control-heavy processes, real-time visibility, reduced manual dependency, and predictive forecasting capability.</strong> Finance is well-structured — digital acceleration is the next maturity step.</p>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-finance" class="iv-dept-panel">
+                        <div id="ivDeptLocked-finance" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-finance" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Finance
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-finance" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-finance">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- HR PANEL -->
                 <div id="hr-panel" class="dept-panel">
@@ -3668,6 +4375,18 @@
                             <i class="fas fa-users"></i> View All Staff Directory
                         </button>
                     </div>
+                    <!-- Interview Tab for hr -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-hr" onclick="ivSwitchTab('hr','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-hr" onclick="ivSwitchTab('hr','interviews')">
+                            <span class="iv-dot" id="ivDot-hr"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-hr">
+
 
                     <!-- Intro -->
                     <div class="content-card">
@@ -3904,7 +4623,35 @@
                             <p style="color:#374151;font-size:0.875rem;line-height:1.6;margin:0;">HR is structurally organised and compliant. The next stage of maturity requires: <strong>automation, predictive workforce analytics, a centralised HR dashboard, and reduced manual dependency.</strong></p>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-hr" class="iv-dept-panel">
+                        <div id="ivDeptLocked-hr" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-hr" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — HR
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-hr" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-hr">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- CPO PANEL -->
                 <div id="cpo-panel" class="dept-panel">
@@ -3917,6 +4664,18 @@
                             <div class="stat-item"><div class="stat-value" style="color:#7c3aed;">ILM L5</div><div class="stat-label">Leadership Academy</div></div>
                         </div>
                     </div>
+                    <!-- Interview Tab for cpo -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-cpo" onclick="ivSwitchTab('cpo','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-cpo" onclick="ivSwitchTab('cpo','interviews')">
+                            <span class="iv-dot" id="ivDot-cpo"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-cpo">
+
 
                     <!-- CPO Profile -->
                     <div class="content-card" style="border:2px solid #7c3aed;background:linear-gradient(135deg,#faf5ff,#f3e8ff);">
@@ -4122,7 +4881,35 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-cpo" class="iv-dept-panel">
+                        <div id="ivDeptLocked-cpo" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-cpo" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — HR
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-cpo" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-cpo">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- MARKETING PANEL -->
                 <div id="europe-panel" class="dept-panel">
@@ -4138,6 +4925,18 @@
                             <div class="stat-item"><div class="stat-value" style="color:#60a5fa;">10</div><div class="stat-label">Visa</div></div>
                         </div>
                     </div>
+                    <!-- Interview Tab for europe -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-europe" onclick="ivSwitchTab('europe','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-europe" onclick="ivSwitchTab('europe','interviews')">
+                            <span class="iv-dot" id="ivDot-europe"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-europe">
+
                     
                     <!-- Intro card -->
                     <div class="content-card" style="border-left:4px solid #1e40af;background:linear-gradient(135deg,#eff6ff,#dbeafe);">
@@ -4933,7 +5732,35 @@
                         </div>
                     </div>
                         </div>
+                    
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-europe" class="iv-dept-panel">
+                        <div id="ivDeptLocked-europe" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-europe" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Operations
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-europe" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-europe">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
                     </div>
+</div>
 
                     <!-- Bookings & Operations -->
                     <div class="content-card" style="padding:0;overflow:hidden;border:1.5px solid #e2e8f0;">
@@ -5158,6 +5985,18 @@
                             <div class="stat-item"><div class="stat-value" style="color:#e11d48;">Suggested</div><div class="stat-label">Workflow Design</div></div>
                         </div>
                     </div>
+                    <!-- Interview Tab for marketing -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-marketing" onclick="ivSwitchTab('marketing','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-marketing" onclick="ivSwitchTab('marketing','interviews')">
+                            <span class="iv-dot" id="ivDot-marketing"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-marketing">
+
 
                     <!-- Suggested Notice -->
                     <div style="padding:12px 20px 0;">
@@ -5345,7 +6184,35 @@
                             <p style="color:#64748b;font-size:0.82rem;margin:0;"><em>These workflows will be updated once formal workflow documentation is received from Trip Factory.</em></p>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-marketing" class="iv-dept-panel">
+                        <div id="ivDeptLocked-marketing" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-marketing" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — B2C Sales
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-marketing" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-marketing">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
 
                 <!-- CONTRACTING PANEL -->
                 <div id="contracting-panel" class="dept-panel">
@@ -5358,6 +6225,18 @@
                             <div class="stat-item"><div class="stat-value" style="color:#d97706;">Suggested</div><div class="stat-label">Workflow Design</div></div>
                         </div>
                     </div>
+                    <!-- Interview Tab for contracting -->
+                    <div class="iv-tab-strip no-print" style="padding:0 20px 0;display:flex;align-items:center;border-bottom:1px solid #e2e8f0;margin-bottom:0;">
+                        <button class="iv-tab-btn active" id="ivTabContent-contracting" onclick="ivSwitchTab('contracting','content')">
+                            <i class="fas fa-building" style="font-size:0.7rem;"></i> Department
+                        </button>
+                        <button class="iv-tab-btn" id="ivTabInterview-contracting" onclick="ivSwitchTab('contracting','interviews')">
+                            <span class="iv-dot" id="ivDot-contracting"></span>
+                            <i class="fas fa-clipboard-list" style="font-size:0.7rem;"></i> Interview Notes
+                        </button>
+                    </div>
+                    <div id="ivContentArea-contracting">
+
 
                     <!-- Suggested Notice -->
                     <div style="padding:12px 20px 0;">
@@ -5553,7 +6432,124 @@
                             <p style="color:#64748b;font-size:0.82rem;margin:0;"><em>These workflows will be updated once formal workflow documentation is received from Trip Factory.</em></p>
                         </div>
                     </div>
-                </div>
+                
+                    </div><!-- end ivContentArea -->
+                    <div id="ivInterviewArea-contracting" class="iv-dept-panel">
+                        <div id="ivDeptLocked-contracting" style="padding:30px 20px;text-align:center;">
+                            <i class="fas fa-lock" style="font-size:2rem;color:#cbd5e1;margin-bottom:10px;"></i>
+                            <h4 style="color:#1e293b;margin:0 0 6px;">Interview notes locked</h4>
+                            <p style="color:#64748b;font-size:0.85rem;margin:0 0 14px;">
+                                <a href="#" onclick="ivShowLogin()" style="color:#f97316;text-decoration:none;font-weight:600;">Unlock reviewer access</a> to add or view HR interview notes.
+                            </p>
+                        </div>
+                        <div id="ivDeptContent-contracting" style="display:none;padding:16px 20px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h3 style="margin:0;color:#0f172a;font-size:1rem;font-weight:700;">
+                                        <i class="fas fa-clipboard-list" style="color:#f97316;margin-right:6px;"></i>
+                                        Interview Reviews — Product
+                                    </h3>
+                                    <p style="margin:4px 0 0;font-size:0.8rem;color:#64748b;">
+                                        Click any person to expand their review card
+                                    </p>
+                                </div>
+                                <div id="ivDeptStats-contracting" style="font-size:0.8rem;color:#64748b;"></div>
+                            </div>
+                            <div id="ivPersonList-contracting">
+                                <div style="color:#94a3b8;text-align:center;padding:20px;">Loading staff list...</div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+
+
+<!-- INTERVIEWS MASTER PANEL -->
+<div id="interviews-panel" class="dept-panel">
+    <div class="panel-header" style="background:linear-gradient(135deg,#0f172a,#1e293b);border-top:4px solid #f97316;">
+        <div class="panel-title" style="color:white;"><i class="fas fa-clipboard-list" style="margin-right:8px;color:#f97316;"></i>HR Interview Reviews</div>
+        <div class="panel-subtitle" style="color:#94a3b8;">Staff review tracker — capability, position fit &amp; action items</div>
+        <div class="panel-stats">
+            <div class="stat-item"><div class="stat-value" id="ivStatTotal" style="color:#f97316;">698</div><div class="stat-label">Total Staff</div></div>
+            <div class="stat-item"><div class="stat-value" id="ivStatReviewed" style="color:#10b981;">0</div><div class="stat-label">Reviewed</div></div>
+            <div class="stat-item"><div class="stat-value" id="ivStatProgress" style="color:#f59e0b;">0</div><div class="stat-label">In Progress</div></div>
+            <div class="stat-item"><div class="stat-value" id="ivStatPct" style="color:#f97316;">0%</div><div class="stat-label">Complete</div></div>
+        </div>
+    </div>
+
+    <div style="padding:16px 20px 8px;" class="no-print">
+        <div class="iv-progress-text" id="ivProgressText">0 of 698 reviews complete</div>
+        <div class="iv-progress-bar"><div class="iv-progress-fill" id="ivProgressFill" style="width:0%"></div></div>
+    </div>
+
+    <!-- Not logged in state -->
+    <div id="ivMasterLocked" style="padding:40px 20px;text-align:center;">
+        <i class="fas fa-lock" style="font-size:2.5rem;color:#cbd5e1;margin-bottom:14px;"></i>
+        <h3 style="color:#1e293b;margin:0 0 6px;">Interview Notes Locked</h3>
+        <p style="color:#64748b;margin:0 0 20px;font-size:0.9rem;">Reviewer access required to view and edit interview notes.</p>
+        <button onclick="ivShowLogin()" style="padding:10px 28px;background:#f97316;color:white;border:none;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;">
+            <i class="fas fa-unlock-alt" style="margin-right:6px;"></i>Unlock Review Access
+        </button>
+    </div>
+
+    <!-- Logged in state -->
+    <div id="ivMasterContent" style="display:none;padding:0 20px 20px;">
+        <div class="iv-master-header">
+            <div class="iv-master-filters">
+                <select class="iv-master-filter" id="ivFilterDept" onchange="ivRenderMaster()">
+                    <option value="">All Departments</option>
+                    <option value="b2c">B2C Sales</option>
+                    <option value="b2b">B2B Sales</option>
+                    <option value="ops">Operations</option>
+                    <option value="product">Product</option>
+                    <option value="tech">Technology</option>
+                    <option value="finance">Finance</option>
+                    <option value="hr">Human Resources</option>
+                </select>
+                <select class="iv-master-filter" id="ivFilterStatus" onchange="ivRenderMaster()">
+                    <option value="">All Statuses</option>
+                    <option value="not-reviewed">Not Reviewed</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="complete">Complete</option>
+                </select>
+                <select class="iv-master-filter" id="ivFilterAction" onchange="ivRenderMaster()">
+                    <option value="">All Actions</option>
+                    <option value="follow-up">Follow-up Required</option>
+                    <option value="training">Training Needed</option>
+                    <option value="restructure">Restructure</option>
+                    <option value="no-action">No Action</option>
+                </select>
+                <input type="text" class="iv-master-filter" id="ivSearchPerson" 
+                    placeholder="🔍 Search name..." oninput="ivRenderMaster()" style="min-width:180px;">
+            </div>
+            <button class="iv-export-btn" onclick="ivExportCSV()">
+                <i class="fas fa-download" style="margin-right:6px;"></i>Export CSV
+            </button>
+        </div>
+        <div style="overflow-x:auto;">
+            <table class="iv-master-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Dept</th>
+                        <th>Location</th>
+                        <th>Capability</th>
+                        <th>Skills</th>
+                        <th>Right Position</th>
+                        <th>Performance</th>
+                        <th>Actions</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="ivMasterTableBody">
+                    <tr><td colspan="11" style="text-align:center;color:#94a3b8;padding:30px;">Loading reviews...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 
 <!-- STAFF MODAL -->
 <div id="staffModal" class="staff-modal-overlay" onclick="if(event.target===this)closeStaffModal()">
@@ -5594,7 +6590,7 @@
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Panel navigation
 const PANEL_META = {
     'executive':   {title:'Executive Leadership',     sub:'C-Suite & Founders'},
@@ -5730,6 +6726,531 @@ function renderStaffTable(list) {
         </tr>
     `).join('');
 }
+
+// ═══════════════════════════════════════════════════════════════════
+// INTERVIEW REVIEW SYSTEM
+// ═══════════════════════════════════════════════════════════════════
+
+const IV_PASSWORD   = 'AliaTF2025';          // reviewer password
+const IV_REVIEWER   = 'Alia Taub';            // reviewer name shown
+const IV_FB_PATH    = 'tripfactory/interviews'; // Firebase path
+
+const IV_PANEL_DEPT = {
+  b2c:'b2c', b2b:'b2b',
+  flights:'ops', visa:'ops', operations:'ops', delivery:'ops', escalation:'ops',
+  product:'product', tech:'tech', finance:'finance',
+  hr:'hr', cpo:'hr', europe:'ops', marketing:'b2c', contracting:'product'
+};
+
+let ivUnlocked   = false;
+let ivReviews    = {};   // { staffORN: reviewObject }
+let ivAllStaff   = [];   // flat list of all staff
+let ivCurrentPanel = 'executive';
+
+// ── Startup ─────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Build flat staff list from STAFF_DATA
+  Object.entries(STAFF_DATA).forEach(([dept, list]) => {
+    list.forEach(s => ivAllStaff.push({...s, _dept: dept}));
+  });
+
+  // Show unlock link always
+  const lockedMsg = document.getElementById('ivLockedMsg');
+  if (lockedMsg) lockedMsg.style.display = 'inline-flex';
+
+  // Listen for Firebase ready
+  document.addEventListener('firebaseReady', ivConnectFirebase);
+  if (window._firebaseReady) ivConnectFirebase();
+});
+
+// ── Firebase connection ──────────────────────────────────────────────
+function ivConnectFirebase() {
+  if (!window._tfDB) return;
+  const r = window._tfRef(window._tfDB, IV_FB_PATH);
+  window._tfOnValue(r, snap => {
+    ivReviews = snap.val() || {};
+    ivUpdateStats();
+    if (ivUnlocked) ivRefreshCurrentView();
+  });
+}
+
+// ── Auth ─────────────────────────────────────────────────────────────
+function ivShowLogin() {
+  document.getElementById('ivLoginOverlay').classList.add('visible');
+  setTimeout(() => document.getElementById('ivPasswordInput').focus(), 100);
+}
+
+function ivDoLogin() {
+  const pw = document.getElementById('ivPasswordInput').value;
+  if (pw === IV_PASSWORD) {
+    ivUnlocked = true;
+    document.getElementById('ivLoginOverlay').classList.remove('visible');
+    document.getElementById('ivPasswordInput').value = '';
+    document.getElementById('ivLoginErr').style.display = 'none';
+    document.getElementById('ivReviewerName').textContent = IV_REVIEWER;
+    document.getElementById('ivReviewerBar').classList.add('visible');
+    document.getElementById('ivHeaderBtn').style.display = 'inline-flex';
+    document.getElementById('ivLockedMsg').style.display = 'none';
+    ivRefreshCurrentView();
+  } else {
+    document.getElementById('ivLoginErr').style.display = 'block';
+    document.getElementById('ivPasswordInput').select();
+  }
+}
+
+function ivLogout() {
+  ivUnlocked = false;
+  document.getElementById('ivReviewerBar').classList.remove('visible');
+  document.getElementById('ivHeaderBtn').style.display = 'none';
+  document.getElementById('ivLockedMsg').style.display = 'inline-flex';
+  // Re-lock all dept interview panes
+  document.querySelectorAll('[id^="ivDeptContent-"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('[id^="ivDeptLocked-"]').forEach(el => el.style.display = 'block');
+  document.getElementById('ivMasterContent').style.display = 'none';
+  document.getElementById('ivMasterLocked').style.display = 'block';
+  // Switch all tabs back to content
+  document.querySelectorAll('[id^="ivInterviewArea-"]').forEach(el => el.classList.remove('visible'));
+  document.querySelectorAll('[id^="ivContentArea-"]').forEach(el => el.style.display = 'block');
+  document.querySelectorAll('[id^="ivTabContent-"]').forEach(el => el.classList.add('active'));
+  document.querySelectorAll('[id^="ivTabInterview-"]').forEach(el => el.classList.remove('active'));
+}
+
+// ── Tab switching within dept panel ──────────────────────────────────
+function ivSwitchTab(panelId, tab) {
+  const contentArea   = document.getElementById('ivContentArea-' + panelId);
+  const interviewArea = document.getElementById('ivInterviewArea-' + panelId);
+  const tabContent    = document.getElementById('ivTabContent-' + panelId);
+  const tabInterview  = document.getElementById('ivTabInterview-' + panelId);
+  if (!contentArea || !interviewArea) return;
+
+  if (tab === 'content') {
+    contentArea.style.display   = 'block';
+    interviewArea.classList.remove('visible');
+    tabContent.classList.add('active');
+    tabInterview.classList.remove('active');
+  } else {
+    contentArea.style.display   = 'none';
+    interviewArea.classList.add('visible');
+    tabContent.classList.remove('active');
+    tabInterview.classList.add('active');
+    if (!ivUnlocked) return; // locked state shown by default HTML
+    ivRenderDeptPanel(panelId);
+  }
+}
+
+// ── Open interview tab for currently viewed panel (header button) ────
+function ivOpenForCurrentPanel() {
+  if (!ivUnlocked) { ivShowLogin(); return; }
+  ivSwitchTab(ivCurrentPanel, 'interviews');
+}
+
+// ── Open master panel ────────────────────────────────────────────────
+function ivOpenMaster() {
+  showPanel('interviews');
+  if (ivUnlocked) {
+    document.getElementById('ivMasterLocked').style.display = 'none';
+    document.getElementById('ivMasterContent').style.display = 'block';
+    ivRenderMaster();
+  }
+}
+
+// ── Refresh current view after data load ─────────────────────────────
+function ivRefreshCurrentView() {
+  if (!ivUnlocked) return;
+  // Unlock all dept panes
+  document.querySelectorAll('[id^="ivDeptLocked-"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('[id^="ivDeptContent-"]').forEach(el => el.style.display = 'none');
+  // Update dot indicators
+  ivUpdateDots();
+  // If interviews panel is showing, re-render master
+  const intPanel = document.getElementById('interviews-panel');
+  if (intPanel && intPanel.classList.contains('active')) {
+    document.getElementById('ivMasterLocked').style.display = 'none';
+    document.getElementById('ivMasterContent').style.display = 'block';
+    ivRenderMaster();
+  }
+}
+
+// ── Stats update ─────────────────────────────────────────────────────
+function ivUpdateStats() {
+  const total    = ivAllStaff.length;
+  const reviewed = Object.values(ivReviews).filter(r => r.status === 'complete').length;
+  const inprog   = Object.values(ivReviews).filter(r => r.status === 'in-progress').length;
+  const pct      = total > 0 ? Math.round((reviewed / total) * 100) : 0;
+
+  const el = id => document.getElementById(id);
+  if (el('ivStatTotal'))    el('ivStatTotal').textContent    = total;
+  if (el('ivStatReviewed')) el('ivStatReviewed').textContent = reviewed;
+  if (el('ivStatProgress')) el('ivStatProgress').textContent = inprog;
+  if (el('ivStatPct'))      el('ivStatPct').textContent      = pct + '%';
+  if (el('ivProgressFill')) el('ivProgressFill').style.width = pct + '%';
+  if (el('ivProgressText')) el('ivProgressText').textContent =
+    `${reviewed} of ${total} reviews complete (${inprog} in progress)`;
+  if (el('ivNavCount'))     el('ivNavCount').textContent     =
+    reviewed + ' reviewed · ' + (total - reviewed - inprog) + ' pending';
+}
+
+function ivUpdateDots() {
+  Object.keys(IV_PANEL_DEPT).forEach(pid => {
+    const dot = document.getElementById('ivDot-' + pid);
+    if (!dot) return;
+    const dept  = IV_PANEL_DEPT[pid];
+    const staff = (STAFF_DATA[dept] || []);
+    const hasNotes = staff.some(s => ivReviews[ivKey(s)] && ivReviews[ivKey(s)].status !== 'not-reviewed');
+    const btn   = document.getElementById('ivTabInterview-' + pid);
+    if (hasNotes) { dot.style.background = '#f97316'; btn && btn.classList.add('has-notes'); }
+    else           { dot.style.background = '#94a3b8'; btn && btn.classList.remove('has-notes'); }
+  });
+}
+
+// ── Key for a staff member ────────────────────────────────────────────
+function ivKey(s) {
+  return (s.orn || s.name).replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+// ── Render dept interview pane ────────────────────────────────────────
+function ivRenderDeptPanel(panelId) {
+  const deptContent = document.getElementById('ivDeptContent-' + panelId);
+  if (!deptContent) return;
+  deptContent.style.display = 'block';
+
+  const deptKey = IV_PANEL_DEPT[panelId];
+  const staff   = STAFF_DATA[deptKey] || [];
+  const list    = document.getElementById('ivPersonList-' + panelId);
+  if (!list) return;
+
+  // Stats
+  const statsEl = document.getElementById('ivDeptStats-' + panelId);
+  if (statsEl) {
+    const done = staff.filter(s => ivReviews[ivKey(s)]?.status === 'complete').length;
+    const prog = staff.filter(s => ivReviews[ivKey(s)]?.status === 'in-progress').length;
+    statsEl.innerHTML =
+      `<span style="color:#166534;font-weight:700;">${done} complete</span> · ` +
+      `<span style="color:#92400e;">${prog} in progress</span> · ` +
+      `<span style="color:#64748b;">${staff.length - done - prog} pending</span>`;
+  }
+
+  list.innerHTML = staff.map(s => ivPersonCardHTML(s, panelId)).join('');
+}
+
+// ── Person card HTML ──────────────────────────────────────────────────
+function ivPersonCardHTML(s, panelId) {
+  const key    = ivKey(s);
+  const review = ivReviews[key] || {};
+  const status = review.status || 'not-reviewed';
+  const initials = s.name.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase();
+  const ts     = review.updatedAt
+    ? new Date(review.updatedAt).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'})
+    : '';
+
+  const statusLabel = { 'not-reviewed':'Not Reviewed','in-progress':'In Progress','complete':'Complete' }[status] || status;
+  const statusClass = 'iv-status-' + status;
+
+  function scaleHTML(field, label) {
+    const val = review[field] || 0;
+    return `<div class="iv-field">
+      <label>${label}</label>
+      <div class="iv-scale">
+        ${[1,2,3,4,5].map(n =>
+          `<button class="iv-scale-btn score-${n}${val==n?' selected':''}" 
+            onclick="ivSetScale('${key}','${panelId}','${field}',${n},this)">${n}</button>`
+        ).join('')}
+      </div>
+    </div>`;
+  }
+
+  const actions = review.actions || {};
+  const notes   = review.notes || '';
+  const rightPos = review.rightPosition || '';
+  const perf    = review.performance || '';
+
+  return `<div class="iv-person-card" id="ivCard-${key}">
+    <div class="iv-card-header" onclick="ivToggleCard('${key}')">
+      <div class="iv-card-person">
+        <div class="iv-avatar" style="background:${status==='complete'?'#059669':status==='in-progress'?'#f97316':'#0f172a'}">
+          ${initials}
+        </div>
+        <div>
+          <div class="iv-person-name">${s.name}</div>
+          <div class="iv-person-meta">${s.orn || ''} · ${s.role} · ${s.location || ''}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="iv-status-badge ${statusClass}">${statusLabel}</span>
+        ${ts ? `<span style="font-size:0.72rem;color:#94a3b8;">${ts}</span>` : ''}
+        <i class="fas fa-chevron-down iv-chevron" id="ivChev-${key}"></i>
+      </div>
+    </div>
+    <div class="iv-card-body" id="ivBody-${key}">
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 12px;margin-bottom:14px;font-size:0.8rem;color:#92400e;">
+        <i class="fas fa-user-tie" style="margin-right:5px;color:#f97316;"></i>
+        <strong>Alia Taub</strong> · HR Review Notes · ${s.sub_dept || ''} · Manager: ${s.manager || '—'}
+      </div>
+
+      <div class="iv-form-grid">
+        ${scaleHTML('capability','Capability (1–5)')}
+        ${scaleHTML('skillsMatch','Skills Match (1–5)')}
+        <div class="iv-field">
+          <label>Right Position?</label>
+          <select class="iv-select" onchange="ivSetField('${key}','${panelId}','rightPosition',this.value)">
+            <option value="" ${!rightPos?'selected':''}>— Select —</option>
+            <option value="yes"     ${rightPos==='yes'?'selected':''}>✅ Yes</option>
+            <option value="no"      ${rightPos==='no'?'selected':''}>❌ No</option>
+            <option value="maybe"   ${rightPos==='maybe'?'selected':''}>🤔 Maybe</option>
+            <option value="review"  ${rightPos==='review'?'selected':''}>🔄 Needs Review</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="iv-form-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="iv-field">
+          <label>Performance Indicator</label>
+          <select class="iv-select" onchange="ivSetField('${key}','${panelId}','performance',this.value)">
+            <option value="" ${!perf?'selected':''}>— Select —</option>
+            <option value="exceeding"  ${perf==='exceeding'?'selected':''}>⭐ Exceeding Expectations</option>
+            <option value="meeting"    ${perf==='meeting'?'selected':''}>✅ Meeting Expectations</option>
+            <option value="below"      ${perf==='below'?'selected':''}>⚠️ Below Expectations</option>
+            <option value="too-early"  ${perf==='too-early'?'selected':''}>🕐 Too Early to Say</option>
+          </select>
+        </div>
+        <div class="iv-field">
+          <label>Review Status</label>
+          <select class="iv-select" onchange="ivSetField('${key}','${panelId}','status',this.value)">
+            <option value="not-reviewed" ${status==='not-reviewed'?'selected':''}>Not Reviewed</option>
+            <option value="in-progress"  ${status==='in-progress'?'selected':''}>In Progress</option>
+            <option value="complete"     ${status==='complete'?'selected':''}>Complete</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="iv-field" style="margin-bottom:14px;">
+        <label>Action Required</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;">
+          ${[
+            ['follow-up','Follow-up Meeting Required'],
+            ['training','Training / Development Needed'],
+            ['restructure','Role Restructure Recommended'],
+            ['no-action','No Action Required'],
+            ['probation','Performance Plan / Probation'],
+            ['promote','Promotion Consideration']
+          ].map(([val,label]) => `
+            <label class="iv-checkbox-label">
+              <input type="checkbox" ${actions[val]?'checked':''} 
+                onchange="ivSetAction('${key}','${panelId}','${val}',this.checked)">
+              ${label}
+            </label>`).join('')}
+        </div>
+      </div>
+
+      <div class="iv-field">
+        <label>Notes — Alia Taub</label>
+        <textarea class="iv-notes-area" id="ivNotes-${key}" 
+          placeholder="Add interview observations, key discussion points, concerns, and next steps here..."
+          onchange="ivSetField('${key}','${panelId}','notes',this.value)"
+        >${notes}</textarea>
+      </div>
+
+      <div class="iv-save-row">
+        <span class="iv-saved-ts" id="ivSavedTs-${key}">${ts ? 'Last saved: ' + ts : ''}</span>
+        <button class="iv-save-btn" onclick="ivSaveReview('${key}','${panelId}')">
+          <i class="fas fa-save" style="margin-right:5px;"></i>Save Review
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Toggle card open/close ────────────────────────────────────────────
+function ivToggleCard(key) {
+  const body  = document.getElementById('ivBody-' + key);
+  const chev  = document.getElementById('ivChev-' + key);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (chev) chev.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// ── Set scale value ───────────────────────────────────────────────────
+function ivSetScale(key, panelId, field, val, btn) {
+  // Update UI immediately
+  const parent = btn.closest('.iv-scale');
+  parent.querySelectorAll('.iv-scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  ivDraftSave(key, field, val);
+}
+
+// ── Set field value ───────────────────────────────────────────────────
+function ivSetField(key, panelId, field, val) {
+  ivDraftSave(key, field, val);
+  if (field === 'status') ivUpdateCardStatus(key, val);
+}
+
+function ivSetAction(key, panelId, action, checked) {
+  const review = ivReviews[key] || {};
+  const actions = {...(review.actions || {})};
+  if (checked) actions[action] = true; else delete actions[action];
+  ivDraftSave(key, 'actions', actions);
+}
+
+// ── Draft save to local object (saved to Firebase on button click) ────
+function ivDraftSave(key, field, val) {
+  if (!ivReviews[key]) ivReviews[key] = {};
+  if (field === 'actions') {
+    ivReviews[key].actions = val;
+  } else {
+    ivReviews[key][field] = val;
+  }
+  // Auto-upgrade status to in-progress if touching fields
+  if (!ivReviews[key].status || ivReviews[key].status === 'not-reviewed') {
+    if (field !== 'status') ivReviews[key].status = 'in-progress';
+  }
+}
+
+// ── Save to Firebase ──────────────────────────────────────────────────
+async function ivSaveReview(key, panelId) {
+  if (!window._tfDB) { alert('Firebase not connected. Please check your internet connection.'); return; }
+  
+  const btn = document.querySelector(`#ivCard-${key} .iv-save-btn`);
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+  // Get current notes value from textarea
+  const notesEl = document.getElementById('ivNotes-' + key);
+  if (notesEl) ivDraftSave(key, 'notes', notesEl.value);
+
+  const review = {
+    ...(ivReviews[key] || {}),
+    updatedAt: new Date().toISOString(),
+    reviewer: IV_REVIEWER
+  };
+
+  try {
+    const r = window._tfRef(window._tfDB, IV_FB_PATH + '/' + key);
+    await window._tfSet(r, review);
+    ivReviews[key] = review;
+    const ts = new Date(review.updatedAt).toLocaleDateString('en-GB', 
+      {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    const tsEl = document.getElementById('ivSavedTs-' + key);
+    if (tsEl) tsEl.textContent = 'Saved: ' + ts;
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-check" style="margin-right:5px;"></i>Saved!'; 
+      setTimeout(() => { btn.innerHTML = '<i class="fas fa-save" style="margin-right:5px;"></i>Save Review'; }, 2000); }
+    ivUpdateStats();
+    ivUpdateDots();
+    if (panelId) ivUpdateCardStatus(key, review.status);
+  } catch(e) {
+    console.error('Save failed:', e);
+    if (btn) { btn.disabled = false; btn.innerHTML = '⚠️ Save Failed — retry'; }
+  }
+}
+
+// ── Update card header badge ──────────────────────────────────────────
+function ivUpdateCardStatus(key, status) {
+  const card = document.getElementById('ivCard-' + key);
+  if (!card) return;
+  const badge = card.querySelector('.iv-status-badge');
+  const avatar = card.querySelector('.iv-avatar');
+  if (badge) {
+    badge.className = 'iv-status-badge iv-status-' + status;
+    badge.textContent = { 'not-reviewed':'Not Reviewed','in-progress':'In Progress','complete':'Complete' }[status] || status;
+  }
+  if (avatar) {
+    avatar.style.background = status==='complete'?'#059669':status==='in-progress'?'#f97316':'#0f172a';
+  }
+}
+
+// ── Master panel render ───────────────────────────────────────────────
+function ivRenderMaster() {
+  const tbody    = document.getElementById('ivMasterTableBody');
+  if (!tbody) return;
+  const deptF    = document.getElementById('ivFilterDept')?.value   || '';
+  const statusF  = document.getElementById('ivFilterStatus')?.value || '';
+  const actionF  = document.getElementById('ivFilterAction')?.value || '';
+  const searchF  = (document.getElementById('ivSearchPerson')?.value || '').toLowerCase();
+
+  const deptLabels = {
+    b2c:'B2C Sales', b2b:'B2B Sales', ops:'Operations',
+    product:'Product', tech:'Technology', finance:'Finance', hr:'HR'
+  };
+
+  let rows = ivAllStaff.filter(s => {
+    if (deptF && s._dept !== deptF) return false;
+    const r = ivReviews[ivKey(s)] || {};
+    if (statusF && (r.status || 'not-reviewed') !== statusF) return false;
+    if (actionF && !(r.actions || {})[actionF]) return false;
+    if (searchF && !s.name.toLowerCase().includes(searchF)) return false;
+    return true;
+  });
+
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#94a3b8;padding:24px;">No matching staff</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(s => {
+    const r   = ivReviews[ivKey(s)] || {};
+    const status = r.status || 'not-reviewed';
+    const ts  = r.updatedAt ? new Date(r.updatedAt).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) : '—';
+    const actions = Object.keys(r.actions || {}).join(', ') || '—';
+    const cap  = r.capability   ? '★'.repeat(r.capability)   : '—';
+    const sk   = r.skillsMatch  ? '★'.repeat(r.skillsMatch)  : '—';
+    const rp   = r.rightPosition || '—';
+    const perf = r.performance || '—';
+    const statusBg = status==='complete'?'#dcfce7':status==='in-progress'?'#fef3c7':'#f1f5f9';
+    const statusFg = status==='complete'?'#166534':status==='in-progress'?'#92400e':'#64748b';
+    return `<tr onclick="ivJumpToReview('${ivKey(s)}','${s._dept}')">
+      <td style="font-weight:700;color:#1e293b;">${s.name}</td>
+      <td style="color:#475569;">${s.role}</td>
+      <td><span style="background:#f1f5f9;padding:2px 7px;border-radius:10px;font-size:0.75rem;">${deptLabels[s._dept]||s._dept}</span></td>
+      <td style="color:#64748b;">${s.location||'—'}</td>
+      <td style="color:#f97316;letter-spacing:-1px;">${cap}</td>
+      <td style="color:#f97316;letter-spacing:-1px;">${sk}</td>
+      <td style="color:#475569;">${rp}</td>
+      <td style="color:#475569;font-size:0.78rem;">${perf}</td>
+      <td style="color:#475569;font-size:0.75rem;">${actions}</td>
+      <td><span style="background:${statusBg};color:${statusFg};padding:2px 8px;border-radius:10px;font-size:0.72rem;font-weight:700;text-transform:uppercase;">${status.replace('-',' ')}</span></td>
+      <td style="color:#94a3b8;font-size:0.78rem;">${ts}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Jump to person's review from master table ─────────────────────────
+function ivJumpToReview(key, dept) {
+  // Find which panel to open
+  const panelForDept = Object.entries(IV_PANEL_DEPT).find(([p,d]) => d===dept)?.[0] || dept;
+  showPanel(panelForDept);
+  setTimeout(() => {
+    ivSwitchTab(panelForDept, 'interviews');
+    setTimeout(() => {
+      const card = document.getElementById('ivCard-' + key);
+      if (card) { card.scrollIntoView({behavior:'smooth',block:'center'}); ivToggleCard(key); }
+    }, 150);
+  }, 100);
+}
+
+// ── Export CSV ────────────────────────────────────────────────────────
+function ivExportCSV() {
+  const rows = [['Name','ORN','Role','Department','Location','Capability','Skills Match','Right Position','Performance','Actions','Notes','Status','Last Updated','Reviewer']];
+  ivAllStaff.forEach(s => {
+    const r = ivReviews[ivKey(s)] || {};
+    rows.push([
+      s.name, s.orn||'', s.role, s._dept, s.location||'',
+      r.capability||'', r.skillsMatch||'', r.rightPosition||'',
+      r.performance||'',
+      Object.keys(r.actions||{}).join('; '),
+      (r.notes||'').replace(/[\n\r,]/g,' '),
+      r.status||'not-reviewed',
+      r.updatedAt ? new Date(r.updatedAt).toLocaleDateString('en-GB') : '',
+      r.reviewer||''
+    ]);
+  });
+  const csv  = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'TripFactory_Interview_Reviews_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// ── Hook showPanel to track current panel ────────────────────────────
+
 </script>
 </body>
 </html>
