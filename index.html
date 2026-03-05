@@ -7135,7 +7135,7 @@ function ivPersonCardHTML(s, panelId) {
           onchange="ivSetField('${key}','${panelId}','notes',this.value)">${notes}</textarea>
       </div>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;">
-        <button class="iv-save-btn" onclick="ivSaveReview('${key}','${panelId}')">
+        <button class="iv-save-btn" onclick="ivSaveReview('${key}','${panelId}',this)">
           <i class="fas fa-save"></i> Save Review
         </button>
       </div>
@@ -7198,27 +7198,32 @@ function ivAutoSave(key, panelId) {
 }
 
 // ── Save to Firebase ─────────────────────────────────────────────────
-async function ivSaveReview(key, panelId) {
+async function ivSaveReview(key, panelId, btn) {
   if (!window._tfDB || !ivReviews[key]) return;
   const data = { ...ivReviews[key], reviewer: IV_REVIEWER, updatedAt: Date.now() };
   ivReviews[key] = data;
   try {
     const ref = window._tfRef(window._tfDB, 'tripfactory/interviews/' + key);
     await window._tfSet(ref, data);
-    // Brief flash on save button
-    const card = document.getElementById('ivCard-' + key);
-    if (card) {
-      const btn = card.querySelector('.iv-save-btn');
-      if (btn) {
-        const orig = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i> Saved';
-        btn.style.background = '#059669';
-        setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1500);
-      }
+    if (btn) {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Saved';
+      btn.style.background = '#059669';
+      btn.style.transform = 'scale(1.05)';
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.background = '';
+        btn.style.transform = '';
+      }, 1500);
     }
     ivUpdateDots();
   } catch(e) {
     console.error('Save error:', e);
+    if (btn) {
+      btn.innerHTML = '<i class="fas fa-times"></i> Error';
+      btn.style.background = '#dc2626';
+      setTimeout(() => { btn.innerHTML = '<i class="fas fa-save"></i> Save Review'; btn.style.background = ''; }, 2000);
+    }
   }
 }
 
