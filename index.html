@@ -1271,25 +1271,7 @@
   <button class="iv-logout-btn" onclick="ivLogout()">Sign out</button>
 </div>
 
-<!-- Interview Login Overlay -->
-<div id="ivLoginOverlay">
-  <div class="iv-login-box">
-    <div style="width:48px;height:48px;border-radius:12px;background:#f97316;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-      <i class="fas fa-user-shield" style="color:white;font-size:1.3rem;"></i>
-    </div>
-    <h2>Interview Review Access</h2>
-    <p>Enter the reviewer password to access HR interview notes</p>
-    <input class="iv-login-input" type="password" id="ivPasswordInput" placeholder="Password" onkeydown="if(event.key==='Enter')ivDoLogin()">
-    <button class="iv-login-btn" onclick="ivDoLogin()">Unlock</button>
-    <div class="iv-login-err" id="ivLoginErr">Incorrect password. Please try again.</div>
-    <div style="margin-top:14px;">
-      <button onclick="document.getElementById('ivLoginOverlay').classList.remove('visible')" 
-        style="background:none;border:none;color:#94a3b8;font-size:0.8rem;cursor:pointer;font-family:inherit;">
-        Cancel — return to directory
-      </button>
-    </div>
-  </div>
-</div>
+
 
     <div class="app-container">
         <!-- Left Sidebar -->
@@ -6759,21 +6741,22 @@ let ivCurrentPanel = 'executive';
 
 // ── Startup ─────────────────────────────────────────────────────────
 function ivGetPanel(s, dept) {
-  // Assign staff member to their display panel based on dept + sub_dept
+  // Assign staff member to their display panel based on dept + role
   if (dept === 'b2c')     return 'b2c';
   if (dept === 'b2b')     return 'b2b';
-  if (dept === 'product') return 'product';
   if (dept === 'tech')    return 'tech';
   if (dept === 'finance') return 'finance';
   if (dept === 'hr')      return 'hr';
+  if (dept === 'product') {
+    var role = (s.role || '').toLowerCase();
+    if (role.indexOf('contract') !== -1 || role.indexOf('supply relationship') !== -1) return 'contracting';
+    return 'product';
+  }
   if (dept === 'ops') {
-    const sub = (s.sub_dept || '').toLowerCase();
+    var sub = (s.sub_dept || '').toLowerCase();
     if (sub === 'flights') return 'flights';
     if (sub === 'visa')    return 'visa';
     if (sub === 'europe')  return 'europe';
-    // All other ops staff (care, domestic, delivery roles etc)
-    // are shown across operations/delivery/escalation panels
-    // Interview reviews for these are accessible from the operations panel
     return 'operations';
   }
   return dept;
